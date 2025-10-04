@@ -59,10 +59,11 @@ class BTCBacktest:
 
         return fib_levels
 
-    def hodl(self, capital=10000):
+    def hodl(self, capital=10000, fee=0.001):
         """Buy and hold strategy"""
         prices = self.data['Close']
-        btc = capital / prices.iloc[0]
+        # Deduct 0.1% fee on purchase
+        btc = (capital * (1 - fee)) / prices.iloc[0]
         portfolio = btc * prices
 
         return {
@@ -107,7 +108,7 @@ class BTCBacktest:
             'trades': trades
         }
 
-    def dca(self, capital=10000, frequency=30):
+    def dca(self, capital=10000, frequency=30, fee=0.001):
         """Dollar Cost Averaging strategy"""
         prices = self.data['Close']
 
@@ -123,7 +124,8 @@ class BTCBacktest:
         for i, (date, price) in enumerate(prices.items()):
             # Buy on schedule
             if i % frequency == 0 and cash >= buy_amount:
-                btc += buy_amount / price
+                # Deduct 0.1% fee
+                btc += (buy_amount * (1 - fee)) / price
                 cash -= buy_amount
                 trades += 1
 
@@ -138,7 +140,7 @@ class BTCBacktest:
             'trades': trades
         }
 
-    def buy_the_dip(self, capital=10000, dip_percent=10):
+    def buy_the_dip(self, capital=10000, dip_percent=10, fee=0.001):
         """Buy the Dip strategy - buy when price drops X% from recent high"""
         prices = self.data['Close']
 
@@ -158,7 +160,8 @@ class BTCBacktest:
 
                 # Buy if price dropped by target percentage
                 if drawdown_pct <= -dip_percent and cash >= buy_amount:
-                    btc += buy_amount / price
+                    # Deduct 0.1% fee
+                    btc += (buy_amount * (1 - fee)) / price
                     cash -= buy_amount
                     trades += 1
 
@@ -173,7 +176,7 @@ class BTCBacktest:
             'trades': trades
         }
 
-    def rsi_strategy(self, capital=10000, rsi_threshold=30, period=14):
+    def rsi_strategy(self, capital=10000, rsi_threshold=30, period=14, fee=0.001):
         """RSI Oversold strategy - buy when RSI < threshold"""
         prices = self.data['Close']
 
@@ -194,7 +197,8 @@ class BTCBacktest:
             if i >= period:
                 # Buy when RSI is oversold
                 if rsi.iloc[i] < rsi_threshold and cash >= buy_amount:
-                    btc += buy_amount / price
+                    # Deduct 0.1% fee
+                    btc += (buy_amount * (1 - fee)) / price
                     cash -= buy_amount
                     trades += 1
 
@@ -209,7 +213,7 @@ class BTCBacktest:
             'trades': trades
         }
 
-    def ma_crossover(self, capital=10000, short_window=50, long_window=200):
+    def ma_crossover(self, capital=10000, short_window=50, long_window=200, fee=0.001):
         """Moving Average Crossover - Golden Cross/Death Cross"""
         prices = self.data['Close']
 
@@ -227,14 +231,16 @@ class BTCBacktest:
             if i >= long_window:
                 # Golden Cross - buy signal
                 if ma_short.iloc[i] > ma_long.iloc[i] and not position and cash > 0:
-                    btc = cash / price
+                    # Deduct 0.1% fee on buy
+                    btc = (cash * (1 - fee)) / price
                     cash = 0
                     position = True
                     trades += 1
 
                 # Death Cross - sell signal (convert back to cash)
                 elif ma_short.iloc[i] < ma_long.iloc[i] and position and btc > 0:
-                    cash = btc * price
+                    # Deduct 0.1% fee on sell
+                    cash = btc * price * (1 - fee)
                     btc = 0
                     position = False
                     trades += 1
@@ -250,7 +256,7 @@ class BTCBacktest:
             'trades': trades
         }
 
-    def bollinger_bands(self, capital=10000, period=20, num_std=2):
+    def bollinger_bands(self, capital=10000, period=20, num_std=2, fee=0.001):
         """Bollinger Bands - buy at lower band (mean reversion)"""
         prices = self.data['Close']
 
@@ -270,7 +276,8 @@ class BTCBacktest:
             if i >= period:
                 # Buy when price touches lower band
                 if price <= lower_band.iloc[i] and cash >= buy_amount:
-                    btc += buy_amount / price
+                    # Deduct 0.1% fee
+                    btc += (buy_amount * (1 - fee)) / price
                     cash -= buy_amount
                     trades += 1
 
@@ -285,7 +292,7 @@ class BTCBacktest:
             'trades': trades
         }
 
-    def volatility_adjusted_dca(self, capital=10000, base_frequency=30):
+    def volatility_adjusted_dca(self, capital=10000, base_frequency=30, fee=0.001):
         """Volatility-Adjusted DCA - buy more when volatility is high"""
         prices = self.data['Close']
         returns = prices.pct_change()
@@ -318,7 +325,8 @@ class BTCBacktest:
                     buy_amount = base_buy_amount
 
                 if cash >= buy_amount:
-                    btc += buy_amount / price
+                    # Deduct 0.1% fee
+                    btc += (buy_amount * (1 - fee)) / price
                     cash -= buy_amount
                     trades += 1
 

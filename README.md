@@ -14,7 +14,8 @@ This project compares the performance of popular Bitcoin trading strategies over
 - **Data Points**: 2,103 days
 - **Date Range**: 2020-01-01 to 2025-10-04
 - **Price Range**: $7,200 → $122,380
-- **HODL Return**: 1,599% (verified live data)
+- **HODL Return**: 1,576% (verified live data)
+- **Transaction Fees**: 0.1% included on all buys and sells
 
 ## Strategies Tested
 
