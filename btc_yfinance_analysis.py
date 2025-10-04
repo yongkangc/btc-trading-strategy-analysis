@@ -31,6 +31,10 @@ def fetch_btc_data(start_date='2020-01-01', end_date=None):
     max_price = btc['Close'].max()
     print(f"  Price range: ${min_price:.2f} - ${max_price:.2f}")
 
+    # Save raw data to CSV
+    btc.to_csv('btc_raw_data.csv')
+    print(f"✓ Saved raw price data to btc_raw_data.csv")
+
     return btc
 
 

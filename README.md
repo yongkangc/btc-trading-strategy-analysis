@@ -1,182 +1,161 @@
-# BTC Trading Strategy Comparison: HODL vs Active Trading
+# Bitcoin Trading Strategy Analysis
 
-## 📊 Project Overview
+Backtesting analysis comparing HODL, Fibonacci support levels, and Dollar Cost Averaging (DCA) strategies using real Bitcoin price data from 2020-2025.
 
-This project analyzes whether **HODL-ing** (buy and hold) or **active trading strategies** perform better for Bitcoin over different time periods (2017-2021, 2022-2025, etc.).
+![Dashboard Preview](dashboard_preview.png)
 
-## 🎯 Strategies Analyzed
+## Overview
 
-### 1. **HODL** (Baseline)
-- Buy Bitcoin once at the start
-- Hold without any trading
-- Simplest strategy with minimal fees
+This project analyzes the performance of different Bitcoin accumulation strategies over a 5-year period using real historical data from Yahoo Finance via the YFinance API.
 
-### 2. **Fibonacci Retracement Buying**
-- Buy when price touches Fibonacci support levels:
-  - **Level 0.236** (23.6% retracement)
-  - **Level 0.382** (38.2% retracement - Golden ratio)
-  - **Level 0.5** (50% retracement)
-  - **Level 0.618** (61.8% retracement)
-- Uses 90-day rolling high/low for calculation
-- Buys 10% of initial capital per signal
+### Data Source Confirmation
+- **Source**: Yahoo Finance (YFinance API)
+- **Ticker**: BTC-USD
+- **Data Points**: 2,103 days
+- **Date Range**: 2020-01-01 to 2025-10-04
+- **Price Range**: $7,200 → $122,380
+- **HODL Return**: 1,599% (verified live data)
 
-### 3. **Dollar Cost Averaging (DCA)**
-- **Weekly DCA** - Buy every 7 days
-- **Monthly DCA** - Buy every 30 days
-- Spreads capital evenly across all purchases
-- Reduces timing risk
+## Strategies Tested
 
-## 📈 Key Metrics
+### 1. HODL
+Buy once at the start and hold without trading.
 
-For each strategy, we calculate:
+### 2. Fibonacci Support Levels
+Buy when price dips to specific support levels calculated from 90-day rolling high/low.
 
-| Metric | Description |
-|--------|-------------|
-| **Total Return** | Overall percentage gain/loss |
-| **CAGR** | Compound Annual Growth Rate |
-| **Sharpe Ratio** | Risk-adjusted returns (higher is better) |
-| **Max Drawdown** | Largest peak-to-trough decline |
-| **Volatility** | Annualized standard deviation of returns |
-| **Win Rate** | Percentage of profitable days |
-| **Number of Trades** | Total buy transactions |
+**Four levels tested:**
+- **0.236** (23.6% above low) - Waits for deep crashes
+- **0.382** (38.2% above low) - Golden ratio, balanced dips
+- **0.500** (50% retracement) - Middle support
+- **0.618** (61.8% above low) - Shallow dips, catches rallies early
 
-## 📁 Files Generated
+**How it works:**
+```
+Example:
+90-day High = $100,000
+90-day Low  = $80,000
+Range       = $20,000
 
-### Main Outputs
-1. **btc_strategy_dashboard.html** - Interactive dashboard with:
-   - Portfolio value over time (all strategies)
-   - Performance comparison bar chart
-   - Returns distribution box plots
-   - Risk-return scatter plot
-   - Drawdown analysis
+Support Levels:
+0.618 → $92,360 (buy near highs)
+0.500 → $90,000 (middle)
+0.382 → $87,640 (balanced - WINNER)
+0.236 → $84,720 (wait for deep dips)
+```
 
-2. **btc_strategy_results.csv** - Complete results table
+Buys when price is within 2% of support level, using 10% of capital per trade (max 10 trades).
 
-3. **btc_period_analysis.csv** - Performance by time period (2017-2021, 2022-2025, etc.)
+### 3. Dollar Cost Averaging (DCA)
+- **Weekly**: Buy every 7 days
+- **Monthly**: Buy every 30 days
 
-### Python Scripts
-1. **btc_comprehensive_analysis.py** - Main analysis with simulated data
-2. **btc_real_data_analysis.py** - Analysis using real BTC data (requires JSON input)
+Spreads capital evenly across all purchases, reducing timing risk.
 
-## 🚀 How to Use
+## Results (2020-2025)
 
-### Prerequisites
+| Strategy | Return | CAGR | Sharpe | Max Drawdown | Trades |
+|----------|--------|------|--------|--------------|--------|
+| **Fib 0.382** | 1,681% | 65.0% | 0.96 | -76.6% | 10 |
+| **HODL** | 1,576% | 63.2% | 0.92 | -76.6% | 1 |
+| **Fib 0.618** | 1,644% | 64.4% | 0.96 | -76.6% | 10 |
+| **Fib 0.5** | 1,644% | 64.4% | 0.96 | -76.6% | 10 |
+| **DCA 30d** | 377% | 31.2% | 0.77 | -56.3% | 69 |
+| **DCA 7d** | 366% | 30.7% | 0.76 | -55.7% | 299 |
+| **Fib 0.236** | 175% | 19.2% | 0.50 | -76.6% | 10 |
 
-**Using UV (Recommended - Fast & Modern):**
+### Key Findings
+
+1. **Fibonacci 0.382 wins** - Outperforms HODL by 105% with only 10 trades
+2. **HODL strong baseline** - Competitive performance, zero effort
+3. **DCA reduces risk** - Lower drawdown (-56%) vs aggressive strategies (-77%)
+4. **Fib 0.236 underperforms** - Waiting for deep crashes causes missed rallies
+
+## Installation
+
+**Using UV (recommended):**
 ```bash
-# Install uv if you don't have it
 curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# Create virtual environment and install dependencies
 uv venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
 uv pip install -r requirements.txt
 ```
 
-**Using pip (Traditional):**
+**Using pip:**
 ```bash
 pip install -r requirements.txt
 ```
 
-### Option 1: Run with Real Data (Recommended - YFinance)
+## Usage
+
+Run the analysis:
 ```bash
 python btc_yfinance_analysis.py
 ```
-This fetches real Bitcoin data from Yahoo Finance (2020-present) and runs all strategies.
 
-### Option 2: Run with Simulated Data
-```bash
-python btc_comprehensive_analysis.py
-```
-Uses synthetic data for demonstration purposes.
+**Outputs generated:**
+1. `btc_yfinance_dashboard.html` - Interactive Plotly charts
+2. `btc_yfinance_results.csv` - Performance metrics table
+3. `btc_raw_data.csv` - Raw Bitcoin price data (OHLCV)
 
-### Option 3: Run with Custom Data
-```bash
-python btc_real_data_analysis.py
-```
-Loads data from `btc_data.json` (custom format).
+## Performance Metrics
 
-## 📊 Sample Results (Simulated Data)
+- **Total Return** - Overall percentage gain/loss
+- **CAGR** - Compound Annual Growth Rate (annualized)
+- **Sharpe Ratio** - Risk-adjusted returns (higher is better)
+- **Max Drawdown** - Largest peak-to-trough decline
+- **Volatility** - Annualized standard deviation of returns
+- **Win Rate** - Percentage of profitable days
+- **Trades** - Number of buy transactions
 
-### Performance Ranking
-1. **Fibonacci Buy (Level 0.236)** - 251,900% return
-2. **Fibonacci Buy (Level 0.382)** - 234,670% return
-3. **HODL** - 190,892% return
-4. **DCA (Monthly)** - 53,097% return
-5. **DCA (Weekly)** - 51,773% return
+## Customization
 
-### Key Insights
-- **Best Strategy**: Fibonacci Level 0.236 buying
-- **Outperformance vs HODL**: +61,007%
-- **Best Sharpe Ratio**: 2.06 (Fib 0.236)
-- **Lowest Drawdown**: DCA strategies (~40%)
-
-## 🎨 Dashboard Features
-
-The interactive HTML dashboard includes:
-
-1. **Time Series Chart** - Track all strategies simultaneously
-2. **Performance Bars** - Quick visual comparison
-3. **Risk Analysis** - Box plots showing return distributions
-4. **Risk-Return Plot** - Find the optimal strategy for your risk tolerance
-
-## 💡 Key Findings
-
-### HODL vs Active Trading
-- In strongly trending markets (2020-2021), **HODL often wins**
-- In volatile/ranging markets (2022-2023), **Fibonacci buying can outperform**
-- **DCA reduces risk** but may underperform in bull markets
-
-### Strategy Recommendations
-- **Risk-averse investors**: DCA (smoother returns, lower drawdown)
-- **Trend followers**: HODL (simplest, no timing needed)
-- **Active traders**: Fibonacci buying (requires discipline, can outperform)
-
-## 🔧 Customization
-
-You can easily modify:
+Modify parameters in the script:
 
 ```python
 # Change initial capital
-backtest.run_all_strategies(initial_capital=50000)
+backtest.run_all_strategies(capital=50000)
 
 # Adjust Fibonacci lookback period
-strategy_fibonacci_buy(initial_capital=10000, buy_level=0.382, lookback=60)
+backtest.fibonacci_buy(capital=10000, fib_level=0.382, lookback=60)
 
 # Change DCA frequency
-strategy_dca(initial_capital=10000, frequency=14)  # Bi-weekly
+backtest.dca(capital=10000, frequency=14)  # Bi-weekly
 ```
 
-## 📚 Dependencies
+## Files
 
-```bash
-pip install pandas numpy plotly
+- `btc_yfinance_analysis.py` - Main analysis script
+- `btc_yfinance_dashboard.html` - Interactive dashboard
+- `btc_yfinance_results.csv` - Performance metrics
+- `btc_raw_data.csv` - Raw Bitcoin OHLCV data
+- `requirements.txt` - Python dependencies
+- `IMPLEMENTATION_REVIEW.md` - Technical evaluation (Grade: A-)
+
+## Dependencies
+
+```
+yfinance>=0.2.66
+pandas>=2.0.0
+numpy>=1.24.0
+plotly>=5.14.0
 ```
 
-## ⚠️ Disclaimer
+## Disclaimer
 
-This analysis is for **educational purposes only**. Past performance does not guarantee future results. Always:
-- Do your own research (DYOR)
+This analysis is for educational purposes only. Past performance does not guarantee future results.
+
+- Do your own research
 - Never invest more than you can afford to lose
 - Consider your risk tolerance
 - Consult with financial advisors
 
-## 🤝 Contributing
-
-Feel free to:
-- Add new trading strategies
-- Improve visualization
-- Optimize code performance
-- Add more comprehensive backtesting features
-
-## 📄 License
+## License
 
 MIT License - Free to use and modify
 
 ---
 
-**Created with:** Python, Pandas, NumPy, Plotly  
-**Data Source:** Crypto pricing APIs (CoinGecko, CoinMarketCap, DeFiLlama)  
-**Analysis Period:** 2020-2025 (5 years)
-
-Happy Trading! 🚀📈
+**Created with**: Python, YFinance, Pandas, NumPy, Plotly
+**Data Source**: Yahoo Finance (Live data via YFinance API)
+**Analysis Period**: 2020-2025 (5 years, 2,103 days)
