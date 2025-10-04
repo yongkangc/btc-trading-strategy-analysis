@@ -1,12 +1,12 @@
 # Bitcoin Trading Strategy Analysis
 
-Backtesting analysis comparing HODL, Fibonacci support levels, and Dollar Cost Averaging (DCA) strategies using real Bitcoin price data from 2020-2025.
+Comprehensive backtesting comparing 9 Bitcoin accumulation strategies using real price data from 2020-2025. Analyzes HODL vs Buy the Dip, RSI, Moving Averages, Bollinger Bands, and DCA variants.
 
 ![Dashboard Preview](dashboard_preview.png)
 
 ## Overview
 
-This project analyzes the performance of different Bitcoin accumulation strategies over a 5-year period using real historical data from Yahoo Finance via the YFinance API.
+This project compares the performance of popular Bitcoin trading strategies over a 5-year period (2020-2025) using real historical data from Yahoo Finance. Tests both passive (HODL, DCA) and active strategies (technical indicators, dip buying) to determine which approach yields the best risk-adjusted returns.
 
 ### Data Source Confirmation
 - **Source**: Yahoo Finance (YFinance API)
@@ -18,58 +18,56 @@ This project analyzes the performance of different Bitcoin accumulation strategi
 
 ## Strategies Tested
 
-### 1. HODL
-Buy once at the start and hold without trading.
+### 1. HODL (Baseline)
+Buy once at the start and hold without trading. The simplest passive strategy.
 
-### 2. Fibonacci Support Levels
-Buy when price dips to specific support levels calculated from 90-day rolling high/low.
+### 2. Buy the Dip
+Buy when price drops a specific percentage from recent all-time high:
+- **10% Dip**: Buy when price is down 10%
+- **20% Dip**: Buy when price is down 20%
+- **30% Dip**: Buy when price is down 30% (WINNER)
 
-**Four levels tested:**
-- **0.236** (23.6% above low) - Waits for deep crashes
-- **0.382** (38.2% above low) - Golden ratio, balanced dips
-- **0.500** (50% retracement) - Middle support
-- **0.618** (61.8% above low) - Shallow dips, catches rallies early
+Uses 10% of capital per dip signal (max 10 trades).
 
-**How it works:**
-```
-Example:
-90-day High = $100,000
-90-day Low  = $80,000
-Range       = $20,000
+### 3. RSI Oversold
+Buy when Relative Strength Index (RSI) drops below 30, indicating oversold conditions. Classic momentum indicator widely used in technical analysis.
 
-Support Levels:
-0.618 → $92,360 (buy near highs)
-0.500 → $90,000 (middle)
-0.382 → $87,640 (balanced - WINNER)
-0.236 → $84,720 (wait for deep dips)
-```
+### 4. Moving Average Crossover (Golden Cross)
+- **Buy**: When 50-day MA crosses above 200-day MA
+- **Sell**: When 50-day MA crosses below 200-day MA (convert to cash)
 
-Buys when price is within 2% of support level, using 10% of capital per trade (max 10 trades).
+Traditional trend-following strategy. Sells during bear markets and rebuy during bull markets.
 
-### 3. Dollar Cost Averaging (DCA)
-- **Weekly**: Buy every 7 days
-- **Monthly**: Buy every 30 days
+### 5. Bollinger Bands
+Buy when price touches the lower Bollinger Band (mean - 2 standard deviations). Mean reversion strategy that capitalizes on price extremes.
 
-Spreads capital evenly across all purchases, reducing timing risk.
+### 6. Dollar Cost Averaging (DCA)
+- **Standard DCA**: Buy every 30 days with equal amounts
+- **Volatility-Adjusted DCA**: Buy more when volatility is high (0.5x-2x multiplier)
+
+Reduces timing risk through systematic accumulation.
 
 ## Results (2020-2025)
 
 | Strategy | Return | CAGR | Sharpe | Max Drawdown | Trades |
 |----------|--------|------|--------|--------------|--------|
-| **Fib 0.382** | 1,681% | 65.0% | 0.96 | -76.6% | 10 |
+| **Buy Dip 30%** | 2,102% | 71.2% | 1.01 | -76.6% | 10 |
+| **Buy Dip 20%** | 1,893% | 68.2% | 0.98 | -76.6% | 10 |
 | **HODL** | 1,576% | 63.2% | 0.92 | -76.6% | 1 |
-| **Fib 0.618** | 1,644% | 64.4% | 0.96 | -76.6% | 10 |
-| **Fib 0.5** | 1,644% | 64.4% | 0.96 | -76.6% | 10 |
+| **Bollinger 20d** | 1,519% | 62.3% | 0.93 | -76.6% | 10 |
+| **RSI <30** | 1,324% | 58.7% | 0.89 | -76.6% | 10 |
+| **Buy Dip 10%** | 1,271% | 57.6% | 0.88 | -76.6% | 10 |
+| **MA Cross 50/200** | 733% | 44.6% | 0.86 | -56.5% | 11 |
 | **DCA 30d** | 377% | 31.2% | 0.77 | -56.3% | 69 |
-| **DCA 7d** | 366% | 30.7% | 0.76 | -55.7% | 299 |
-| **Fib 0.236** | 175% | 19.2% | 0.50 | -76.6% | 10 |
+| **Vol-Adjusted DCA** | 318% | 28.3% | 0.74 | -54.0% | 70 |
 
 ### Key Findings
 
-1. **Fibonacci 0.382 wins** - Outperforms HODL by 105% with only 10 trades
-2. **HODL strong baseline** - Competitive performance, zero effort
-3. **DCA reduces risk** - Lower drawdown (-56%) vs aggressive strategies (-77%)
-4. **Fib 0.236 underperforms** - Waiting for deep crashes causes missed rallies
+1. **Buy Dip 30% WINS** - Outperforms HODL by 526% with only 10 well-timed buys
+2. **Deeper dips = better returns** - 30% dip beats 20% dip beats 10% dip
+3. **HODL still strong** - 1,576% return, requires zero effort or monitoring
+4. **MA Crossover underperforms** - Selling during bear markets hurts long-term gains
+5. **Volatility-Adjusted DCA = lowest risk** - Only -54% max drawdown vs -77% for aggressive strategies
 
 ## Installation
 

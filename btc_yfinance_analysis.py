@@ -138,6 +138,201 @@ class BTCBacktest:
             'trades': trades
         }
 
+    def buy_the_dip(self, capital=10000, dip_percent=10):
+        """Buy the Dip strategy - buy when price drops X% from recent high"""
+        prices = self.data['Close']
+
+        cash = capital
+        btc = 0
+        trades = 0
+        buy_amount = capital * 0.1  # 10% of capital per dip
+
+        # Track rolling high
+        rolling_high = prices.expanding().max()
+        portfolio_values = []
+
+        for i, (date, price) in enumerate(prices.items()):
+            if i > 0:
+                # Calculate drawdown from rolling high
+                drawdown_pct = ((price - rolling_high.iloc[i]) / rolling_high.iloc[i]) * 100
+
+                # Buy if price dropped by target percentage
+                if drawdown_pct <= -dip_percent and cash >= buy_amount:
+                    btc += buy_amount / price
+                    cash -= buy_amount
+                    trades += 1
+
+            portfolio_values.append(cash + btc * price)
+
+        portfolio_series = pd.Series(portfolio_values, index=prices.index)
+
+        return {
+            'name': f'Buy Dip {dip_percent}%',
+            'portfolio': portfolio_series,
+            'returns': portfolio_series.pct_change().fillna(0),
+            'trades': trades
+        }
+
+    def rsi_strategy(self, capital=10000, rsi_threshold=30, period=14):
+        """RSI Oversold strategy - buy when RSI < threshold"""
+        prices = self.data['Close']
+
+        # Calculate RSI
+        delta = prices.diff()
+        gain = (delta.where(delta > 0, 0)).rolling(window=period).mean()
+        loss = (-delta.where(delta < 0, 0)).rolling(window=period).mean()
+        rs = gain / loss
+        rsi = 100 - (100 / (1 + rs))
+
+        cash = capital
+        btc = 0
+        trades = 0
+        buy_amount = capital * 0.1  # 10% per signal
+        portfolio_values = []
+
+        for i, (date, price) in enumerate(prices.items()):
+            if i >= period:
+                # Buy when RSI is oversold
+                if rsi.iloc[i] < rsi_threshold and cash >= buy_amount:
+                    btc += buy_amount / price
+                    cash -= buy_amount
+                    trades += 1
+
+            portfolio_values.append(cash + btc * price)
+
+        portfolio_series = pd.Series(portfolio_values, index=prices.index)
+
+        return {
+            'name': f'RSI <{rsi_threshold}',
+            'portfolio': portfolio_series,
+            'returns': portfolio_series.pct_change().fillna(0),
+            'trades': trades
+        }
+
+    def ma_crossover(self, capital=10000, short_window=50, long_window=200):
+        """Moving Average Crossover - Golden Cross/Death Cross"""
+        prices = self.data['Close']
+
+        # Calculate moving averages
+        ma_short = prices.rolling(window=short_window).mean()
+        ma_long = prices.rolling(window=long_window).mean()
+
+        cash = capital
+        btc = 0
+        trades = 0
+        portfolio_values = []
+        position = False  # Track if we're holding BTC
+
+        for i, (date, price) in enumerate(prices.items()):
+            if i >= long_window:
+                # Golden Cross - buy signal
+                if ma_short.iloc[i] > ma_long.iloc[i] and not position and cash > 0:
+                    btc = cash / price
+                    cash = 0
+                    position = True
+                    trades += 1
+
+                # Death Cross - sell signal (convert back to cash)
+                elif ma_short.iloc[i] < ma_long.iloc[i] and position and btc > 0:
+                    cash = btc * price
+                    btc = 0
+                    position = False
+                    trades += 1
+
+            portfolio_values.append(cash + btc * price)
+
+        portfolio_series = pd.Series(portfolio_values, index=prices.index)
+
+        return {
+            'name': f'MA Cross {short_window}/{long_window}',
+            'portfolio': portfolio_series,
+            'returns': portfolio_series.pct_change().fillna(0),
+            'trades': trades
+        }
+
+    def bollinger_bands(self, capital=10000, period=20, num_std=2):
+        """Bollinger Bands - buy at lower band (mean reversion)"""
+        prices = self.data['Close']
+
+        # Calculate Bollinger Bands
+        ma = prices.rolling(window=period).mean()
+        std = prices.rolling(window=period).std()
+        lower_band = ma - (num_std * std)
+        upper_band = ma + (num_std * std)
+
+        cash = capital
+        btc = 0
+        trades = 0
+        buy_amount = capital * 0.1
+        portfolio_values = []
+
+        for i, (date, price) in enumerate(prices.items()):
+            if i >= period:
+                # Buy when price touches lower band
+                if price <= lower_band.iloc[i] and cash >= buy_amount:
+                    btc += buy_amount / price
+                    cash -= buy_amount
+                    trades += 1
+
+            portfolio_values.append(cash + btc * price)
+
+        portfolio_series = pd.Series(portfolio_values, index=prices.index)
+
+        return {
+            'name': f'Bollinger {period}d',
+            'portfolio': portfolio_series,
+            'returns': portfolio_series.pct_change().fillna(0),
+            'trades': trades
+        }
+
+    def volatility_adjusted_dca(self, capital=10000, base_frequency=30):
+        """Volatility-Adjusted DCA - buy more when volatility is high"""
+        prices = self.data['Close']
+        returns = prices.pct_change()
+
+        # Calculate rolling volatility (30-day)
+        volatility = returns.rolling(window=30).std()
+
+        cash = capital
+        btc = 0
+        trades = 0
+        portfolio_values = []
+
+        # Base buy amount
+        total_buys = len(prices) // base_frequency
+        base_buy_amount = capital / total_buys if total_buys > 0 else capital
+
+        for i, (date, price) in enumerate(prices.items()):
+            if i % base_frequency == 0 and i >= 30:
+                # Adjust buy amount based on volatility
+                # Higher volatility = buy more (when cheap)
+                current_vol = volatility.iloc[i]
+                avg_vol = volatility.iloc[:i].mean()
+
+                if pd.notna(current_vol) and pd.notna(avg_vol) and avg_vol > 0:
+                    vol_multiplier = current_vol / avg_vol
+                    # Cap multiplier between 0.5x and 2x
+                    vol_multiplier = min(max(vol_multiplier, 0.5), 2.0)
+                    buy_amount = base_buy_amount * vol_multiplier
+                else:
+                    buy_amount = base_buy_amount
+
+                if cash >= buy_amount:
+                    btc += buy_amount / price
+                    cash -= buy_amount
+                    trades += 1
+
+            portfolio_values.append(cash + btc * price)
+
+        portfolio_series = pd.Series(portfolio_values, index=prices.index)
+
+        return {
+            'name': f'Vol-Adjusted DCA',
+            'portfolio': portfolio_series,
+            'returns': portfolio_series.pct_change().fillna(0),
+            'trades': trades
+        }
+
     def calculate_metrics(self, result):
         """Calculate performance metrics"""
         pv = result['portfolio']
@@ -184,13 +379,22 @@ class BTCBacktest:
         print("="*70)
 
         strategies = [
+            # Baseline
             self.hodl(capital),
-            self.fibonacci_buy(capital, 0.236, 90),
-            self.fibonacci_buy(capital, 0.382, 90),
-            self.fibonacci_buy(capital, 0.5, 90),
-            self.fibonacci_buy(capital, 0.618, 90),
-            self.dca(capital, 7),   # Weekly
-            self.dca(capital, 30),  # Monthly
+
+            # Buy the Dip strategies
+            self.buy_the_dip(capital, 10),   # -10%
+            self.buy_the_dip(capital, 20),   # -20%
+            self.buy_the_dip(capital, 30),   # -30%
+
+            # Technical indicators
+            self.rsi_strategy(capital, 30),  # RSI < 30
+            self.ma_crossover(capital, 50, 200),  # Golden Cross
+            self.bollinger_bands(capital, 20),  # Bollinger Bands
+
+            # DCA variants
+            self.dca(capital, 30),  # Standard Monthly DCA
+            self.volatility_adjusted_dca(capital, 30),  # Vol-Adjusted DCA
         ]
 
         results = []
