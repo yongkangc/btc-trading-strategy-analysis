@@ -140,20 +140,80 @@ class BTCBacktest:
             'trades': trades
         }
 
-    def buy_the_dip(self, capital=10000, dip_percent=10, fee=0.001):
-        """Buy the Dip strategy - buy when price drops X% from recent high"""
+    def buy_the_dip(self, capital=10000, dip_percent=10, fee=0.001, sell_rule=None):
+        """Buy the Dip strategy - buy when price drops X% from recent high
+
+        sell_rule options:
+        - None: Never sell (default)
+        - 'profit_25': Sell at +25% profit
+        - 'sma_50': Sell when price crosses above 50-day SMA
+        - 'ema_21': Sell when price crosses above 21-day EMA
+        - 'bb_middle': Sell when price reaches middle Bollinger Band
+        - 'ema_cross': Sell when 9-EMA crosses above 21-EMA
+        - 'sma_distance': Sell when price > 20% above 200-day SMA
+        """
         prices = self.data['Close']
+
+        # Pre-calculate indicators for sell rules
+        sma_50 = prices.rolling(window=50).mean() if sell_rule == 'sma_50' else None
+        ema_21 = prices.ewm(span=21, adjust=False).mean() if sell_rule == 'ema_21' else None
+        ema_9 = prices.ewm(span=9, adjust=False).mean() if sell_rule == 'ema_cross' else None
+        ema_21_cross = prices.ewm(span=21, adjust=False).mean() if sell_rule == 'ema_cross' else None
+        sma_200 = prices.rolling(window=200).mean() if sell_rule == 'sma_distance' else None
+
+        if sell_rule == 'bb_middle':
+            bb_ma = prices.rolling(window=20).mean()
+        else:
+            bb_ma = None
 
         cash = capital
         btc = 0
         trades = 0
         buy_amount = capital * 0.1  # 10% of capital per dip
+        buy_prices = []  # Track purchase prices for profit target
 
         # Track rolling high
         rolling_high = prices.expanding().max()
         portfolio_values = []
 
         for i, (date, price) in enumerate(prices.items()):
+            # SELL LOGIC
+            if btc > 0 and sell_rule:
+                should_sell = False
+
+                if sell_rule == 'profit_25' and len(buy_prices) > 0:
+                    avg_buy_price = np.mean(buy_prices)
+                    if price >= avg_buy_price * 1.25:  # +25% profit
+                        should_sell = True
+
+                elif sell_rule == 'sma_50' and i >= 50 and sma_50 is not None:
+                    if price > sma_50.iloc[i]:
+                        should_sell = True
+
+                elif sell_rule == 'ema_21' and i >= 21 and ema_21 is not None:
+                    if price > ema_21.iloc[i]:
+                        should_sell = True
+
+                elif sell_rule == 'bb_middle' and i >= 20 and bb_ma is not None:
+                    if price >= bb_ma.iloc[i]:
+                        should_sell = True
+
+                elif sell_rule == 'ema_cross' and i >= 21:
+                    if ema_9.iloc[i] > ema_21_cross.iloc[i]:
+                        should_sell = True
+
+                elif sell_rule == 'sma_distance' and i >= 200 and sma_200 is not None:
+                    if price > sma_200.iloc[i] * 1.20:  # 20% above 200 SMA
+                        should_sell = True
+
+                if should_sell:
+                    # Sell all BTC
+                    cash += btc * price * (1 - fee)
+                    btc = 0
+                    buy_prices = []
+                    trades += 1
+
+            # BUY LOGIC
             if i > 0:
                 # Calculate drawdown from rolling high
                 drawdown_pct = ((price - rolling_high.iloc[i]) / rolling_high.iloc[i]) * 100
@@ -161,16 +221,19 @@ class BTCBacktest:
                 # Buy if price dropped by target percentage
                 if drawdown_pct <= -dip_percent and cash >= buy_amount:
                     # Deduct 0.1% fee
-                    btc += (buy_amount * (1 - fee)) / price
+                    btc_bought = (buy_amount * (1 - fee)) / price
+                    btc += btc_bought
                     cash -= buy_amount
+                    buy_prices.append(price)
                     trades += 1
 
             portfolio_values.append(cash + btc * price)
 
         portfolio_series = pd.Series(portfolio_values, index=prices.index)
 
+        sell_suffix = f" ({sell_rule})" if sell_rule else ""
         return {
-            'name': f'Buy Dip {dip_percent}%',
+            'name': f'Buy Dip {dip_percent}%{sell_suffix}',
             'portfolio': portfolio_series,
             'returns': portfolio_series.pct_change().fillna(0),
             'trades': trades
@@ -390,10 +453,18 @@ class BTCBacktest:
             # Baseline
             self.hodl(capital),
 
-            # Buy the Dip strategies
+            # Buy the Dip strategies (no sell)
             self.buy_the_dip(capital, 10),   # -10%
             self.buy_the_dip(capital, 20),   # -20%
             self.buy_the_dip(capital, 30),   # -30%
+
+            # Buy Dip 30% with different SELL rules
+            self.buy_the_dip(capital, 30, sell_rule='profit_25'),    # Sell at +25%
+            self.buy_the_dip(capital, 30, sell_rule='sma_50'),       # Sell above 50 SMA
+            self.buy_the_dip(capital, 30, sell_rule='ema_21'),       # Sell above 21 EMA
+            self.buy_the_dip(capital, 30, sell_rule='bb_middle'),    # Sell at BB middle
+            self.buy_the_dip(capital, 30, sell_rule='ema_cross'),    # Sell on 9/21 EMA cross
+            self.buy_the_dip(capital, 30, sell_rule='sma_distance'), # Sell 20% above 200 SMA
 
             # Technical indicators
             self.rsi_strategy(capital, 30),  # RSI < 30
@@ -411,7 +482,7 @@ class BTCBacktest:
             metrics = self.calculate_metrics(s)
             results.append(metrics)
 
-            print(f"\n{s['name']:20s} | Return: {metrics['Return (%)']:>10.2f}% | Trades: {metrics['Trades']:>3d}")
+            print(f"\n{s['name']:35s} | Return: {metrics['Return (%)']:>10.2f}% | Trades: {metrics['Trades']:>3d}")
 
         df = pd.DataFrame(results).set_index('Strategy')
         return df
