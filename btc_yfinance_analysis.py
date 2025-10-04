@@ -177,7 +177,7 @@ class BTCBacktest:
         portfolio_values = []
 
         for i, (date, price) in enumerate(prices.items()):
-            # SELL LOGIC
+            # SELL LOGIC - Use crossover detection to avoid excessive trading
             if btc > 0 and sell_rule:
                 should_sell = False
 
@@ -186,24 +186,40 @@ class BTCBacktest:
                     if price >= avg_buy_price * 1.25:  # +25% profit
                         should_sell = True
 
-                elif sell_rule == 'sma_50' and i >= 50 and sma_50 is not None:
-                    if price > sma_50.iloc[i]:
+                elif sell_rule == 'sma_50' and i >= 51 and sma_50 is not None:
+                    # Crossover detection: was below, now above
+                    prev_price = prices.iloc[i-1]
+                    prev_sma = sma_50.iloc[i-1]
+                    if prev_price <= prev_sma and price > sma_50.iloc[i]:
                         should_sell = True
 
-                elif sell_rule == 'ema_21' and i >= 21 and ema_21 is not None:
-                    if price > ema_21.iloc[i]:
+                elif sell_rule == 'ema_21' and i >= 22 and ema_21 is not None:
+                    # Crossover detection: was below, now above
+                    prev_price = prices.iloc[i-1]
+                    prev_ema = ema_21.iloc[i-1]
+                    if prev_price <= prev_ema and price > ema_21.iloc[i]:
                         should_sell = True
 
-                elif sell_rule == 'bb_middle' and i >= 20 and bb_ma is not None:
-                    if price >= bb_ma.iloc[i]:
+                elif sell_rule == 'bb_middle' and i >= 21 and bb_ma is not None:
+                    # Crossover detection: was below, now above
+                    prev_price = prices.iloc[i-1]
+                    prev_bb = bb_ma.iloc[i-1]
+                    if prev_price <= prev_bb and price >= bb_ma.iloc[i]:
                         should_sell = True
 
-                elif sell_rule == 'ema_cross' and i >= 21:
-                    if ema_9.iloc[i] > ema_21_cross.iloc[i]:
+                elif sell_rule == 'ema_cross' and i >= 22:
+                    # Crossover detection: 9-EMA crosses above 21-EMA
+                    prev_ema9 = ema_9.iloc[i-1]
+                    prev_ema21 = ema_21_cross.iloc[i-1]
+                    if prev_ema9 <= prev_ema21 and ema_9.iloc[i] > ema_21_cross.iloc[i]:
                         should_sell = True
 
-                elif sell_rule == 'sma_distance' and i >= 200 and sma_200 is not None:
-                    if price > sma_200.iloc[i] * 1.20:  # 20% above 200 SMA
+                elif sell_rule == 'sma_distance' and i >= 201 and sma_200 is not None:
+                    # Crossover detection: crosses above 120% of 200 SMA
+                    prev_price = prices.iloc[i-1]
+                    prev_threshold = sma_200.iloc[i-1] * 1.20
+                    curr_threshold = sma_200.iloc[i] * 1.20
+                    if prev_price <= prev_threshold and price > curr_threshold:
                         should_sell = True
 
                 if should_sell:
@@ -417,11 +433,11 @@ class BTCBacktest:
         years = days / 365.25
         cagr = ((pv.iloc[-1] / pv.iloc[0]) ** (1 / years) - 1) * 100 if years > 0 else 0
 
-        # Volatility (annualized)
-        volatility = ret.std() * np.sqrt(252) * 100
+        # Volatility (annualized) - Bitcoin trades 365 days/year
+        volatility = ret.std() * np.sqrt(365) * 100
 
-        # Sharpe Ratio (assuming 0% risk-free rate)
-        sharpe = (ret.mean() * 252) / (ret.std() * np.sqrt(252)) if ret.std() > 0 else 0
+        # Sharpe Ratio (assuming 0% risk-free rate) - Bitcoin trades 365 days/year
+        sharpe = (ret.mean() * 365) / (ret.std() * np.sqrt(365)) if ret.std() > 0 else 0
 
         # Max Drawdown
         rolling_max = pv.expanding().max()

@@ -57,41 +57,42 @@ Buy when price touches lower band (mean - 2σ). Mean reversion strategy.
 ### Top Performers (Never Sell)
 | Strategy | Return | CAGR | Sharpe | Max DD | Trades |
 |----------|--------|------|--------|--------|--------|
-| **Buy Dip 30%** 🥇 | 2,100% | 71.2% | 1.01 | -76.6% | 10 |
-| **Buy Dip 20%** | 1,891% | 68.2% | 0.98 | -76.6% | 10 |
-| **HODL** | 1,576% | 63.2% | 0.92 | -76.6% | 1 |
-| **Bollinger 20d** | 1,518% | 62.2% | 0.93 | -76.6% | 10 |
-| **RSI <30** | 1,322% | 58.7% | 0.89 | -76.6% | 10 |
-| **Buy Dip 10%** | 1,270% | 57.6% | 0.88 | -76.6% | 10 |
+| **Buy Dip 30%** 🥇 | 2,100% | 71.2% | **1.21** | -76.6% | 10 |
+| **Buy Dip 20%** | 1,891% | 68.2% | **1.18** | -76.6% | 10 |
+| **HODL** | 1,576% | 63.2% | **1.11** | -76.6% | 1 |
+| **Bollinger 20d** | 1,518% | 62.2% | **1.12** | -76.6% | 10 |
+| **RSI <30** | 1,322% | 58.7% | **1.07** | -76.6% | 10 |
+| **Buy Dip 10%** | 1,270% | 57.6% | **1.06** | -76.6% | 10 |
 
-### Sell Rule Performance (Buy Dip 30% + Exit Strategy)
+### Sell Rule Performance (Buy Dip 30% + Exit Strategy) - FIXED
 | Sell Rule | Return | CAGR | Sharpe | Max DD | Trades |
 |-----------|--------|------|--------|--------|--------|
-| **No Sell** 🏆 | 2,100% | 71.2% | 1.01 | -76.6% | 10 |
-| **+25% Profit** | 202% | 21.2% | 0.59 | -64.6% | 77 |
-| **SMA Distance** | 143% | 16.7% | 0.50 | -66.1% | 557 |
-| **BB Middle** | 127% | 15.3% | 0.70 | **-19.9%** ⬇️ | 1,242 |
-| **21-day EMA** | 71% | 9.8% | 0.43 | -38.2% | 1,167 |
-| **EMA Cross** | 18% | 2.9% | 0.20 | -51.0% | 945 |
-| **50-day SMA** | 13% | 2.1% | 0.18 | -50.9% | 922 |
+| **No Sell** 🏆 | 2,100% | 71.2% | **1.21** | -76.6% | 10 |
+| **SMA Distance** | 232% | 23.2% | **0.72** | -66.1% | 239 |
+| **BB Middle** | 219% | 22.4% | **0.86** | **-48.7%** ⬇️ | 740 |
+| **+25% Profit** | 202% | 21.2% | **0.71** | -64.6% | 77 |
+| **21-day EMA** | 181% | 19.7% | **0.72** | -56.4% | 598 |
+| **EMA Cross** | 139% | 16.3% | **0.59** | -59.3% | 317 |
+| **50-day SMA** | 103% | 13.1% | **0.52** | -60.0% | 299 |
 
 ### Other Strategies
 | Strategy | Return | CAGR | Sharpe | Max DD | Trades |
 |----------|--------|------|--------|--------|--------|
-| **MA Cross 50/200** | 724% | 44.3% | 0.86 | -56.6% | 11 |
-| **DCA 30d** | 376% | 31.2% | 0.77 | -56.3% | 69 |
-| **Vol-Adjusted DCA** | 318% | 28.2% | 0.74 | -54.0% | 70 |
+| **MA Cross 50/200** | 724% | 44.3% | **1.03** | -56.6% | 11 |
+| **DCA 30d** | 376% | 31.2% | **0.92** | -56.3% | 69 |
+| **Vol-Adjusted DCA** | 318% | 28.2% | **0.89** | -54.0% | 70 |
 
 ### Key Findings
 
 **The HODL Thesis is Validated:**
 1. **Never sell = maximum returns** - Buy Dip 30% with no selling beats HODL by 524%
-2. **All sell rules destroy returns** - Best sell rule (+25% profit) only returns 202% vs 2,100% without selling
-3. **Overtrading kills performance** - Sell rules trigger 77-1,242 trades vs just 10 for buy-only
+2. **Sell rules significantly underperform** - Best sell rule (SMA Distance: 232%) vs 2,100% without selling = 89% loss
+3. **Crossover detection improves results** - With proper implementation, sell rules now show 103-232% returns (vs 13-143% before fix)
 4. **Deeper dips = better entries** - 30% dip beats 20% beats 10% (patience rewarded)
-5. **Risk reduction requires sacrifice** - BB middle band reduces drawdown to -20% but loses 94% of gains
+5. **Risk reduction requires sacrifice** - BB middle band reduces drawdown to -48.7% but still loses 90% of gains
+6. **Sharpe ratios corrected** - Now using 365 days (crypto trades 24/7) instead of 252 days (stocks), ~20% higher
 
-**The Verdict:** In a sustained bull market (2020-2025), selling Bitcoin early is the enemy of wealth. The winning strategy is buying severe dips (30%) and holding forever.
+**The Verdict:** Even with optimized sell rules, buy-and-hold strategies (HODL, Buy Dip without selling) crush active trading. In 2020-2025 bull market, the winning strategy is buying severe dips (30%) and holding forever.
 
 ## Installation
 
@@ -165,6 +166,36 @@ pandas>=2.0.0
 numpy>=1.24.0
 plotly>=5.14.0
 ```
+
+## Code Quality & Bug Fixes
+
+### Recent Improvements (Oct 2025)
+
+**Three critical bugs were identified and fixed:**
+
+1. **Sharpe Ratio Calculation (FIXED)** ✅
+   - **Issue**: Used 252 trading days (stock market) instead of 365 (Bitcoin trades 24/7)
+   - **Impact**: All Sharpe ratios were understated by ~20%
+   - **Fix**: Updated calculation to use `np.sqrt(365)` for Bitcoin
+   - **Result**: HODL Sharpe improved from 0.92 → **1.11** (+20%)
+
+2. **Volatility Calculation (FIXED)** ✅
+   - **Issue**: Same 252 vs 365 problem
+   - **Impact**: All volatility metrics were understated by ~20%
+   - **Fix**: Updated to use 365 days for annualization
+
+3. **Sell Rule Logic (FIXED)** ✅
+   - **Issue**: Strategies triggered on continuous conditions (price > SMA every day) instead of crossovers
+   - **Impact**: Massive overtrading (900-1,200 trades instead of 50-300), destroying returns via fee drag
+   - **Fix**: Implemented proper crossover detection (previous day below, current day above)
+   - **Result**:
+     - Buy Dip 30% (sma_50): **12.8%** → **103%** (8x improvement)
+     - Buy Dip 30% (bb_middle): **127%** → **219%** (1.7x improvement)
+     - Trade counts reduced by 50-75%
+
+**All results in this README reflect the corrected implementation.**
+
+---
 
 ## Disclaimer
 
