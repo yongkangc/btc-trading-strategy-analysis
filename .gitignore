@@ -38,6 +38,10 @@ env/
 *.json
 btc_data.json
 
+# Environment variables
+.env
+**/.env
+
 # Output files (keep in repo for demo)
 # btc_yfinance_dashboard.html
 # btc_yfinance_results.csv
