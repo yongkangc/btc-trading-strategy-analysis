@@ -5,7 +5,7 @@
 **Period**: 1 Year (Oct 2024 - Oct 2025)
 **Data Source**: Yahoo Finance (LIVE DATA)
 
-![BTC Capital Flow Dashboard](btc_capital_flow_1year_dashboard.png)
+![BTC Capital Flow Dashboard](images/btc_capital_flow_1year_dashboard.png)
 
 ---
 

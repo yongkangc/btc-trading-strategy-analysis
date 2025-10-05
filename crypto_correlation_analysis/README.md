@@ -1,88 +1,134 @@
-# Cryptocurrency Correlation Analysis: ETH, SOL, HYPE
+# Cryptocurrency Market Analysis & Trading Signals
 
-Comprehensive 3-year correlation analysis comparing Ethereum (ETH), Solana (SOL), and Hyperliquid (HYPE) cryptocurrencies. Analyzes volatility, correlation, monthly returns, and Sortino ratios using real market data from Yahoo Finance.
+Comprehensive quantitative analysis of cryptocurrency markets, focusing on capital rotation, correlation patterns, and trading strategy development. Uses live data from Yahoo Finance to analyze BTC, ETH, SOL, and HYPE.
 
-![3-Year Correlation Dashboard](crypto_correlation_dashboard.png)
+![3-Year Correlation Dashboard](reports/images/crypto_correlation_dashboard.png)
 
-## Overview
+---
 
-This project analyzes the performance and correlation of three major cryptocurrencies over a 3-year period (2022-2025) using real historical data from Yahoo Finance. Tests risk-adjusted returns, volatility patterns, and correlation relationships to inform investment decisions.
+## 📊 Analysis Reports
 
-### Data Source
-- **Source**: Yahoo Finance (yfinance API)
-- **Tickers**: ETH-USD, SOL-USD, HYPE32196-USD (Hyperliquid)
-- **Data Points**: 1,094 days for ETH/SOL, 309 days for HYPE
-- **Date Range**: October 6, 2022 to October 3, 2025
-- **Analysis Period**: 3 years (HYPE: 11 months)
+### 1. [Capital Rotation Exit Signals](reports/CAPITAL_ROTATION_EXIT_SIGNALS.md) ⭐ **Trading Strategy**
 
-## Key Findings
+**Question**: "After BTC.D drops and capital flows to ETH/SOL, how long does it stay before rotating to smaller caps?"
 
-### Price Performance (3 Years)
+**Key Findings**:
+- **Average hold duration**: ~22 days from BTC.D peak to ETH.D peak
+- **Average ETH return**: 69.66% during rotation period
+- **Exit signal rules**: ETH.D/SOL.D decline >0.3% over 7 days OR BTC.D rises >0.3%
+- **Current status**: Exit signals INACTIVE (safe to hold)
 
-| Asset | Initial Price | Final Price | Total Return | Annualized Return |
-|-------|--------------|-------------|--------------|-------------------|
-| **SOL** 🥇 | $33.34 | $233.00 | **598.81%** | **901.42%** |
-| **ETH** | $1,351.71 | $4,514.87 | **234.01%** | **317.53%** |
-| **HYPE** | $6.08* | $49.49 | **714.14%*** | **N/A** |
+**Use case**: Real-time exit signals for ETH/SOL positions
 
-*HYPE only has 11 months of data (launched Nov 2024)
+📁 [View Full Report](reports/CAPITAL_ROTATION_EXIT_SIGNALS.md) | 📊 [Interactive Dashboard](dashboards/capital_rotation_exit_signals_dashboard.html)
 
-### Correlation Matrix
+---
 
-|      | ETH   | SOL   | HYPE  |
-|------|-------|-------|-------|
-| ETH  | 1.000 | **0.760** | 0.493 |
-| SOL  | 0.760 | 1.000 | 0.465 |
-| HYPE | 0.493 | 0.465 | 1.000 |
+### 2. [BTC Capital Flow Analysis](reports/BTC_CAPITAL_FLOW_SUMMARY.md) ⭐ **Entry Strategy**
 
-**Key Insight**: ETH and SOL are highly correlated (0.76), suggesting they move together 76% of the time. HYPE shows moderate correlation (~0.47-0.49), indicating more independent price action.
+**Question**: "After BTC Dominance peaks, where does capital flow and when?"
 
-### Volatility Analysis (Annualized)
+**Key Findings**:
+- Capital flows to **ETH and SOL IMMEDIATELY** (same-day, 77% correlation)
+- **NO exploitable time lag** (2-week/1-month delays destroy correlation)
+- When BTC.D drops: ETH +6.77% avg, SOL +4.86% avg, BTC +1.30% avg
+- ETH outperforms BTC by **5.5x** when BTC.D declines
 
-| Rank | Asset | Volatility |
-|------|-------|------------|
-| 1 | **HYPE** | **131.97%** |
-| 2 | **SOL** | **87.31%** |
-| 3 | **ETH** | **75.94%** |
+**Use case**: Entry timing for ETH/SOL positions when BTC.D peaks
 
-**Key Insight**: HYPE is the most volatile (highest risk/reward), while ETH is the most stable of the three.
+📁 [View Full Report](reports/BTC_CAPITAL_FLOW_SUMMARY.md) | 📊 [Interactive Dashboard](dashboards/btc_capital_flow_1year_dashboard.html)
 
-### Sortino Ratio (Risk-Adjusted Returns)
+---
 
-| Rank | Asset | Sortino Ratio | Interpretation |
-|------|-------|---------------|----------------|
-| 1 | **SOL** 🏆 | **16.488** | Exceptional risk-adjusted returns |
-| 2 | **ETH** | **6.373** | Very good risk-adjusted returns |
-| 3 | **HYPE** | **N/A** | Insufficient data |
+### 3. [Alpha/Beta Analysis](reports/ALPHA_BETA_REPORT.md) ⭐ **Risk Assessment**
 
-**Risk-free rate**: 4%
+**Question**: "Do ETH/SOL go down less and go up more than BTC?" (Upside/Downside Capture)
 
-**Key Insight**: SOL offers the best risk-adjusted returns (16.5 Sortino), meaning it generated 16.5x the downside risk in excess returns. ETH also shows strong performance (6.4 Sortino).
+**Key Findings**:
+- **SOL**: Goes up 50% MORE than BTC ✅, but goes down 60% MORE than BTC ❌ (NOT defensive)
+- **ETH**: Goes up 33% MORE than BTC, goes down 31% MORE than BTC (more defensive)
+- **SOL Beta**: 1.578 (highest volatility), Alpha: -25.4% (underperforms)
+- **ETH Beta**: 1.427 (lowest volatility), Alpha: +3.5% (outperforms)
+- **HYPE**: Best alpha (275.9% annually) but highest volatility
 
-### Monthly Return Statistics
+**Use case**: Asset selection and position sizing based on risk tolerance
 
-| Metric | ETH | SOL | HYPE |
-|--------|-----|-----|------|
-| **Avg Monthly Return** | 4.65% | 11.10% | 26.18% |
-| **Best Month** | 48.67% | 140.46% | 174.20% |
-| **Worst Month** | -32.15% | -56.72% | -35.15% |
-| **Positive Months** | 19/36 (53%) | 21/36 (58%) | 9/11 (82%) |
-| **Win Rate** | 53% | 58% | 82% |
+📁 [View Full Report](reports/ALPHA_BETA_REPORT.md) | 📊 [Interactive Dashboard](dashboards/alpha_beta_dashboard.html)
 
-**Key Insight**: HYPE has the highest average monthly return (26.18%) and win rate (82%), but limited data. SOL shows strong consistent returns (11.10% avg) with 58% win rate.
+---
 
-## Dashboard Features
+### 4. [3-Year Correlation Analysis](reports/CRYPTO_CORRELATION_3YEAR.md)
 
-The interactive Plotly dashboard includes:
+**Period**: October 2022 - October 2025 (3 years)
 
-1. **Price History** - Normalized to 100 for comparison
-2. **Correlation Heatmap** - Visual correlation matrix
-3. **Monthly Returns** - Last 12 months comparison
-4. **Volatility Bar Chart** - Annualized volatility ranking
-5. **Sortino Ratios** - Risk-adjusted performance comparison
-6. **Cumulative Returns** - Total return over time
+**Key Findings**:
+- **SOL**: 598.81% total return, 901.42% annualized, Sortino ratio 16.49 🏆
+- **ETH**: 234.01% total return, 317.53% annualized, Sortino ratio 6.37
+- **HYPE**: 714.14% total return (11 months only)
+- **ETH-SOL correlation**: 76% (move together, limited diversification benefit)
 
-## Installation
+**Use case**: Long-term performance comparison and diversification analysis
+
+📁 [View Full Report](reports/CRYPTO_CORRELATION_3YEAR.md) | 📊 [Interactive Dashboard](dashboards/crypto_correlation_dashboard.html)
+
+---
+
+## 🎯 Complete Trading Strategy (TLDR)
+
+### **ENTRY** (BTC Capital Flow Analysis)
+1. Monitor **BTC Dominance (BTC.D)** in real-time
+2. When BTC.D peaks and starts declining → **Buy ETH/SOL immediately**
+3. Capital flows same-day (77% correlation), NOT with 2-week lag
+
+### **HOLD** (Capital Rotation Exit Analysis)
+1. After BTC.D peaks, capital typically stays in ETH/SOL for **~22 days**
+2. Average ETH return during rotation: **69.66%**
+3. Monitor ETH.D and SOL.D for peaks
+
+### **EXIT** (Capital Rotation Exit Analysis)
+1. Exit when **ETH.D/SOL.D decline >0.3% over 7 days**
+2. OR when **BTC.D starts rising >0.3%** (capital returning to BTC)
+3. **Current status**: Exit signals INACTIVE ✅ (safe to hold)
+
+### **ASSET SELECTION** (Alpha/Beta Analysis)
+- **For max returns**: HYPE (alpha: 275.9%)
+- **For defense**: ETH (beta: 1.427, upside 133%, downside 131%)
+- **SOL**: Aggressive (beta: 1.578, amplifies both up and down)
+
+---
+
+## 📁 Project Structure
+
+```
+crypto_correlation_analysis/
+├── README.md                    # This file (entry point)
+├── reports/                     # Analysis reports
+│   ├── CAPITAL_ROTATION_EXIT_SIGNALS.md
+│   ├── BTC_CAPITAL_FLOW_SUMMARY.md
+│   ├── ALPHA_BETA_REPORT.md
+│   ├── CRYPTO_CORRELATION_3YEAR.md
+│   └── images/                  # Report screenshots
+├── dashboards/                  # Interactive HTML dashboards
+│   ├── capital_rotation_exit_signals_dashboard.html
+│   ├── btc_capital_flow_1year_dashboard.html
+│   ├── alpha_beta_dashboard.html
+│   └── crypto_correlation_dashboard.html
+├── scripts/                     # Python analysis scripts
+│   ├── capital_rotation_exit_signals.py
+│   ├── btc_lag_correlation_1year.py
+│   ├── alpha_beta_analysis.py
+│   └── crypto_correlation_analysis.py
+├── data/                        # Data files
+│   ├── raw/                     # Raw price data
+│   └── processed/               # Analysis results
+└── .env                         # API keys (gitignored)
+```
+
+---
+
+## 🚀 Quick Start
+
+### Installation
 
 **Using UV (recommended):**
 ```bash
@@ -96,169 +142,142 @@ cd crypto_correlation_analysis
 pip install -r requirements.txt
 ```
 
-## Usage
+### Run Analyses
 
-Run the analysis:
 ```bash
-python crypto_correlation_analysis.py
+# Capital rotation exit signals (live trading signals)
+python scripts/capital_rotation_exit_signals.py
+
+# BTC capital flow analysis (entry timing)
+python scripts/btc_lag_correlation_1year.py
+
+# Alpha/beta analysis (risk assessment)
+python scripts/alpha_beta_analysis.py
+
+# 3-year correlation (long-term performance)
+python scripts/crypto_correlation_analysis.py
 ```
 
-**Outputs generated:**
-1. `crypto_correlation_dashboard.html` - Interactive Plotly dashboard
-2. `crypto_raw_data.csv` - Raw price data (all 3 assets)
-3. `monthly_returns.csv` - Month-over-month percentage changes
-4. `correlation_matrix.csv` - Correlation coefficients
-5. `volatility.csv` - Annualized volatility metrics
-6. `sortino_ratios.csv` - Sortino ratio calculations
+---
 
-## Metrics Explained
+## 📊 Key Metrics Explained
 
-### Correlation
+### **Correlation**
 - **Range**: -1 to +1
-- **Interpretation**:
-  - +1: Perfect positive correlation (move together)
-  - 0: No correlation (independent)
-  - -1: Perfect negative correlation (move opposite)
-- **Example**: ETH-SOL correlation of 0.76 means they move together 76% of the time
+- **Interpretation**: +1 = move together perfectly, 0 = independent, -1 = move opposite
+- **Example**: ETH-SOL 76% correlation = move together 76% of the time
 
-### Volatility
-- **Measure**: Annualized standard deviation of daily returns
-- **Interpretation**: Higher volatility = higher risk AND higher potential returns
-- **Calculation**: `std(daily_returns) * sqrt(365)`
+### **Beta** (Market Sensitivity)
+- **Beta > 1**: More volatile than BTC (amplifies moves)
+- **Beta = 1**: Same volatility as BTC
+- **Beta < 1**: Less volatile than BTC (dampens moves)
+- **Example**: SOL beta 1.578 = moves 1.58% when BTC moves 1%
 
-### Sortino Ratio
-- **Formula**: `(Return - Risk_Free_Rate) / Downside_Deviation`
-- **Difference from Sharpe**: Only penalizes downside volatility (negative returns)
-- **Interpretation**:
-  - >3: Excellent
-  - 1-3: Good
-  - <1: Poor
-- **Example**: SOL's 16.5 Sortino means it generated 16.5x the downside risk in excess returns
+### **Alpha** (Excess Returns)
+- **Positive alpha**: Outperforms BTC after adjusting for risk
+- **Zero alpha**: Matches BTC performance
+- **Negative alpha**: Underperforms BTC
+- **Example**: HYPE alpha 275.9% = generates 275.9% extra return annually vs BTC
 
-### Downside Deviation
-- **Measure**: Standard deviation of negative returns only
-- **Interpretation**: Measures downside risk specifically
-- **ETH**: 49.20% | **SOL**: 54.43% | **HYPE**: 65.16%
+### **Sortino Ratio** (Risk-Adjusted Returns)
+- **Formula**: (Return - Risk_Free_Rate) / Downside_Deviation
+- **Interpretation**: >3 = Excellent, 1-3 = Good, <1 = Poor
+- **Example**: SOL Sortino 16.5 = generates 16.5x the downside risk in excess returns
 
-## Investment Insights
+### **Upside/Downside Capture**
+- **Upside Capture**: How much % gain when BTC rises
+- **Downside Capture**: How much % loss when BTC falls
+- **Ideal**: High upside (>100%), low downside (<100%)
+- **Example**: SOL 150% upside, 160% downside = amplifies both directions ❌
 
-### Best for Risk-Adjusted Returns: **SOL** 🏆
-- Highest Sortino ratio (16.5)
-- Strong monthly returns (11.10% avg)
-- Moderate correlation with ETH (0.76)
-- Lower downside deviation than HYPE
+### **Dominance (BTC.D, ETH.D, SOL.D)**
+- **BTC.D**: BTC / (BTC + ETH + SOL + Others) × 100%
+- **ETH.D**: ETH / (BTC + ETH + SOL + Others) × 100%
+- **Use**: Track capital rotation between asset classes
 
-### Best for Stability: **ETH**
-- Lowest volatility (75.94%)
-- Solid returns (317% annualized)
-- Good Sortino ratio (6.4)
-- Most mature market
+---
 
-### Highest Growth Potential: **HYPE**
-- Highest monthly average (26.18%)
-- Best win rate (82%)
-- Highest volatility (132%)
-- ⚠️ Limited data (11 months only)
+## 📈 Current Market Status
 
-### Diversification Benefits
-- ETH-SOL correlation (0.76): Moderate diversification
-- HYPE correlation (0.47-0.49): Good diversification opportunity
-- **Recommendation**: Mix of all three reduces portfolio risk
+**As of October 5, 2025:**
 
-## Customization
+| Metric | Value | Status |
+|--------|-------|--------|
+| **BTC.D** | 96.26% | Below average (96.87%) ✅ Alt-friendly |
+| **ETH.D** | 3.51% | Stable |
+| **SOL.D** | 0.039% | Stable |
+| **ETH Exit Signal** | INACTIVE | ✅ Safe to hold |
+| **SOL Exit Signal** | INACTIVE | ✅ Safe to hold |
 
-### Change Date Range
-```python
-# In crypto_correlation_analysis.py:
-data = fetch_yfinance_data(ticker,
-    start_date=datetime(2023, 1, 1),  # Start date
-    end_date=datetime(2025, 12, 31)   # End date
-)
-```
+---
 
-### Change Risk-Free Rate
-```python
-# Default is 4% (0.04)
-sortino_df = calculate_sortino_ratio(data, risk_free_rate=0.02)  # 2%
-```
+## 📚 Data Sources
 
-### Add More Cryptocurrencies
-```python
-# Add to TICKERS dictionary:
-TICKERS = {
-    'ETH': 'ETH-USD',
-    'SOL': 'SOL-USD',
-    'HYPE': 'HYPE32196-USD',
-    'BTC': 'BTC-USD',      # Bitcoin
-    'AVAX': 'AVAX-USD',    # Avalanche
-}
-```
+- **Price Data**: Yahoo Finance (yfinance API)
+- **Period**:
+  - 3-year analysis: Oct 2022 - Oct 2025
+  - Capital flow: Oct 2024 - Oct 2025 (1 year)
+  - Exit signals: Nov 2024 - Oct 2025 (limited by HYPE launch)
+- **Update Frequency**: Run scripts to fetch latest data
+- **Risk-free rate**: 4% (10-year Treasury yield)
 
-## Files
+---
 
-- `crypto_correlation_analysis.py` - Main analysis script
-- `requirements.txt` - Python dependencies
-- `.env` - API keys (gitignored)
-- `crypto_correlation_dashboard.html` - Interactive dashboard
-- `crypto_raw_data.csv` - Raw OHLC data
-- `monthly_returns.csv` - Monthly percentage changes
-- `correlation_matrix.csv` - Correlation coefficients
-- `volatility.csv` - Annualized volatility
-- `sortino_ratios.csv` - Sortino ratio calculations
+## ⚠️ Limitations & Disclaimers
 
-## Dependencies
+### Analysis Limitations
 
-```
-yfinance>=0.2.66    # Yahoo Finance data
-pandas>=2.0.0       # Data processing
-numpy>=1.24.0       # Numerical operations
-plotly>=5.14.0      # Interactive charts
-python-dotenv>=1.0.0  # Environment variables
-scipy>=1.11.0       # Statistical calculations
-```
+1. **Sample Size**:
+   - HYPE only 11 months of data (launched Nov 2024)
+   - Exit signal analysis limited to 310 days
 
-## Methodology
+2. **Market Efficiency**:
+   - High correlation suggests limited arbitrage opportunities
+   - Fast capital flows (same-day rotation)
 
-### Data Collection
-1. Fetch daily OHLCV data from Yahoo Finance for 3 years
-2. Use Close price for all calculations
-3. Forward-fill any missing data points
+3. **Simplified Dominance**:
+   - Only includes BTC, ETH, SOL, HYPE
+   - Real BTC.D includes all cryptocurrencies
 
-### Calculations
-1. **Monthly Returns**: `(end_price / start_price - 1) * 100`
-2. **Correlation**: Pearson correlation of daily returns
-3. **Volatility**: `std(daily_returns) * sqrt(365)`
-4. **Sortino Ratio**: `(annual_return - rf_rate) / downside_deviation`
-5. **Downside Deviation**: `std(negative_returns_only) * sqrt(365)`
+4. **Changing Dynamics**:
+   - Crypto markets evolve rapidly
+   - New catalysts (ETFs, regulations) may change correlations
 
-### Risk-Free Rate
-- Default: 4% (approximate 10-year Treasury yield)
-- Adjustable based on investor preference
+### Trading Disclaimer
 
-## Limitations
+**This analysis is for educational purposes only. Not financial advice.**
 
-1. **HYPE Data**: Only 11 months of data (launched Nov 2024)
-   - Sortino ratio not calculable (needs full year)
-   - Limited historical performance
-   - Higher uncertainty
-
-2. **Past Performance**: Does not guarantee future results
-3. **Market Conditions**: Analysis covers specific period (bear → bull market)
-4. **Correlation Changes**: Correlations fluctuate over time
-5. **Transaction Costs**: Not included in analysis (add ~0.1-0.5% per trade)
-
-## Disclaimer
-
-This analysis is for **educational purposes only**. Not financial advice.
-
+- Past performance ≠ future results
+- Cryptocurrency markets are highly volatile
 - Do your own research (DYOR)
 - Never invest more than you can afford to lose
-- Cryptocurrency markets are highly volatile
 - Consider your risk tolerance
 - Consult with financial advisors
-- Past performance ≠ future results
 
-## License
+---
+
+## 🛠️ Technical Stack
+
+- **Python**: pandas, numpy, scipy, yfinance, plotly
+- **Data**: Yahoo Finance API
+- **Analysis**: Linear regression, correlation matrices, peak detection
+- **Visualization**: Plotly (interactive dashboards)
+
+---
+
+## 📧 Contributing
+
+To add new analyses:
+
+1. Create script in `scripts/`
+2. Save data to `data/raw/` or `data/processed/`
+3. Generate report in `reports/`
+4. Create dashboard in `dashboards/`
+5. Update this README with link to new analysis
+
+---
+
+## 📝 License
 
 MIT License - Free to use and modify
 
@@ -266,5 +285,4 @@ MIT License - Free to use and modify
 
 **Created with**: Python, YFinance, Pandas, NumPy, Plotly, SciPy
 **Data Source**: Yahoo Finance (Live data via yfinance API)
-**Analysis Period**: October 2022 - October 2025 (3 years)
-**Cryptocurrencies**: 3 (ETH, SOL, HYPE)
+**Last Updated**: October 5, 2025

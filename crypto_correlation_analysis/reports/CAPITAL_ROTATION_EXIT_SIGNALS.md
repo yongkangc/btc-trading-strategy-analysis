@@ -5,7 +5,7 @@
 **Period**: 2024-11-29 to 2025-10-05
 **Total Days**: 310
 
-![Capital Rotation Dashboard](capital_rotation_exit_signals_dashboard.png)
+![Capital Rotation Dashboard](images/capital_rotation_exit_signals_dashboard.png)
 
 ---
 
@@ -119,7 +119,7 @@ SOL.D = SOL / (BTC + ETH + SOL + Others) × 100%
 
 1. **CAPITAL_ROTATION_EXIT_SIGNALS.md** - This report
 2. **capital_rotation_exit_signals_dashboard.html** - Interactive charts
-3. **capital_rotation_exit_signals_dashboard.png** - Dashboard screenshot
+3. **images/capital_rotation_exit_signals_dashboard.png** - Dashboard screenshot
 4. **dominance_data.csv** - Dominance time series
 5. **exit_signals.csv** - Exit signal timeline
 6. **rotation_events.csv** - Historical rotation events

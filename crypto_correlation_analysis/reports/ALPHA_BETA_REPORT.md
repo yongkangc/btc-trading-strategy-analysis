@@ -5,7 +5,7 @@
 **Period**: 2024-11-29 to 2025-10-05 (2024-2025 data only)
 **Total Days**: 310
 
-![Alpha/Beta Analysis Dashboard](alpha_beta_dashboard_2024_2025.png)
+![Alpha/Beta Analysis Dashboard](images/alpha_beta_dashboard_2024_2025.png)
 
 ---
 
