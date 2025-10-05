@@ -1,284 +1,365 @@
-# Bitcoin & Cryptocurrency Quantitative Research
+# Bitcoin and Cryptocurrency Quantitative Research
 
-Comprehensive quantitative research on Bitcoin trading strategies and cryptocurrency market dynamics. Two major research areas with actionable trading insights backed by data.
-
----
-
-## 📚 Research Topics
-
-### 1. [Bitcoin Strategy Backtesting (2020-2025)](1_btc_strategy_backtesting/)
-
-**Question**: Should you ever sell Bitcoin?
-
-Comprehensive backtesting of 15+ Bitcoin accumulation strategies over 5 years using real price data. Tests HODL, Buy the Dip, RSI, Moving Averages, Bollinger Bands, and DCA variants with and without sell rules.
-
-**Key Finding**: ✅ **Never sell wins**
-- Buy Dip 30% (no sell): **2,100% return**
-- Buy Dip 30% (best sell rule): **232% return** (89% loss)
-- HODL: **1,576% return**
-
-**Conclusion**: Even with optimized sell rules, buy-and-hold crushes active trading in bull markets.
-
-📁 [View Full Analysis](1_btc_strategy_backtesting/README.md)
+Comprehensive quantitative analysis of Bitcoin trading strategies and cryptocurrency market dynamics. Two independent research studies providing data-driven insights for cryptocurrency trading and investment decisions.
 
 ---
 
-### 2. [Crypto Market Analysis & Trading Signals](2_crypto_market_analysis/)
+## Research Overview
 
-**Question**: When to enter and exit ETH/SOL positions?
+This repository contains two major research areas focused on cryptocurrency markets:
 
-Analyzes capital rotation patterns, correlation dynamics, and generates real-time trading signals for ETH, SOL, and HYPE. Includes alpha/beta analysis, upside/downside capture ratios, and BTC dominance tracking.
+**1. Bitcoin Strategy Backtesting (2020-2025)**
+Empirical analysis of 15+ Bitcoin accumulation strategies over five years using historical price data. Evaluates passive strategies (HODL, DCA) against active trading approaches (dip buying, technical indicators, profit-taking rules) to determine optimal risk-adjusted returns.
+
+**2. Crypto Market Analysis and Trading Signals (2022-2025)**
+Quantitative analysis of capital rotation patterns, asset correlations, and trading signal generation for major cryptocurrencies (BTC, ETH, SOL, HYPE). Includes alpha/beta analysis, upside/downside capture ratios, and Bitcoin dominance tracking for entry and exit timing.
+
+---
+
+## Research Topics
+
+### Topic 1: Bitcoin Strategy Backtesting
+
+**Research Question**: Should investors ever sell Bitcoin, or is buy-and-hold optimal?
+
+**Methodology**: Backtesting of 15+ accumulation strategies using real Yahoo Finance data from January 2020 to October 2025. All strategies include 0.1% transaction fees.
 
 **Key Findings**:
-- **Entry**: Buy ETH/SOL immediately when BTC.D peaks (77% same-day correlation)
-- **Hold**: Capital stays in ETH/SOL for ~22 days (69.66% average ETH return)
-- **Exit**: When ETH.D/SOL.D decline >0.3% over 7 days (signals rotation to smaller caps)
-- **Current Status**: Exit signals INACTIVE ✅ (safe to hold)
+- Buy Dip 30% (no sell): 2,100% total return
+- Buy Dip 30% (with best sell rule): 232% total return (89% reduction)
+- HODL baseline: 1,576% total return
+- Sharpe ratios favor never-sell strategies: 1.21 vs 0.72
 
-**Asset Selection**:
-- **SOL**: NOT defensive (goes up 50% more AND down 60% more than BTC)
-- **ETH**: More defensive (beta 1.427 vs SOL 1.578)
-- **HYPE**: Best alpha (275.9% annually) but highest volatility
+**Conclusion**: Buy-and-hold strategies significantly outperform active trading strategies with sell rules during bull market periods, even after optimizing exit signals.
 
-📁 [View Full Analysis](2_crypto_market_analysis/README.md)
+[View detailed analysis →](1_btc_strategy_backtesting/README.md)
 
 ---
 
-## 🎯 Quick Comparison
+### Topic 2: Crypto Market Analysis and Trading Signals
 
-| Topic | Focus | Period | Key Metric | Best Strategy |
-|-------|-------|--------|------------|---------------|
-| **BTC Backtesting** | Should you sell? | 2020-2025 (5 years) | Total Return | Buy Dip 30% + Never Sell (2,100%) |
-| **Crypto Market Analysis** | When to trade? | 2024-2025 (1 year) | Risk-Adjusted | Entry: BTC.D peak, Exit: ETH.D decline |
+**Research Question**: When should traders enter and exit ETH/SOL positions based on market dynamics?
+
+**Methodology**: Statistical analysis of capital rotation, correlation dynamics, and dominance metrics using daily price data. Includes linear regression for alpha/beta calculations and peak detection algorithms for signal generation.
+
+**Key Findings**:
+- Entry timing: Immediate capital flow when BTC dominance peaks (77% same-day correlation)
+- Hold duration: Approximately 22 days from BTC dominance peak to ETH dominance peak
+- Exit timing: When ETH/SOL dominance declines >0.3% over 7 days
+- Average ETH return during rotation period: 69.66%
+
+**Current Market Status** (October 5, 2025):
+- Exit signals: Inactive (safe to hold)
+- BTC dominance: 96.26% (below average)
+- Market phase: Alt-friendly environment
+
+**Asset Characteristics**:
+- SOL: High volatility (beta 1.578), amplifies both upside and downside movements
+- ETH: Moderate volatility (beta 1.427), more defensive characteristics
+- HYPE: Highest alpha (275.9% annually) with highest volatility
+
+[View detailed analysis →](2_crypto_market_analysis/README.md)
 
 ---
 
-## 📁 Repository Structure
+## Quick Comparison
+
+| Aspect | Bitcoin Strategy Backtesting | Crypto Market Analysis |
+|--------|------------------------------|------------------------|
+| **Focus** | Optimal holding strategy | Entry/exit timing |
+| **Period** | 2020-2025 (5 years) | 2022-2025 (3 years) |
+| **Strategies** | 15+ backtested | 4 analytical frameworks |
+| **Best Result** | Buy Dip 30% + Never Sell: 2,100% | Entry at BTC.D peak, Exit at ETH.D decline |
+| **Key Metric** | Total Return, Sharpe Ratio | Alpha, Beta, Capture Ratios |
+
+---
+
+## Repository Structure
 
 ```
 btc-trading-strategy-analysis/
-├── README.md                           # This file (navigation hub)
-├── 1_btc_strategy_backtesting/         # Bitcoin strategy backtesting
-│   ├── README.md                       # Full analysis & results
-│   ├── scripts/                        # Python backtesting scripts
-│   ├── data/                           # Price data & results
-│   ├── dashboards/                     # Interactive visualizations
-│   ├── reports/                        # Yearly performance reports
-│   └── CLAUDE.md                       # Developer notes
-├── 2_crypto_market_analysis/           # Crypto market dynamics
-│   ├── README.md                       # Entry point for all analyses
-│   ├── scripts/                        # Python analysis scripts
-│   ├── data/                           # Raw & processed data
-│   ├── dashboards/                     # Interactive dashboards
-│   └── reports/                        # 4 detailed reports
-│       ├── CAPITAL_ROTATION_EXIT_SIGNALS.md
-│       ├── BTC_CAPITAL_FLOW_SUMMARY.md
-│       ├── ALPHA_BETA_REPORT.md
-│       └── CRYPTO_CORRELATION_3YEAR.md
-├── requirements.txt                    # Python dependencies (root)
-└── .gitignore                          # Git ignore rules
+├── README.md
+├── 1_btc_strategy_backtesting/
+│   ├── README.md
+│   ├── scripts/
+│   │   ├── btc_yfinance_analysis.py
+│   │   ├── btc_yearly_analysis.py
+│   │   └── create_yearly_report.py
+│   ├── data/
+│   │   ├── raw/
+│   │   └── processed/
+│   ├── dashboards/
+│   ├── reports/
+│   └── CLAUDE.md
+├── 2_crypto_market_analysis/
+│   ├── README.md
+│   ├── scripts/
+│   │   ├── capital_rotation_exit_signals.py
+│   │   ├── btc_lag_correlation_1year.py
+│   │   ├── alpha_beta_analysis.py
+│   │   ├── crypto_correlation_analysis.py
+│   │   └── btc_dominance_analysis.py
+│   ├── data/
+│   │   ├── raw/
+│   │   └── processed/
+│   ├── dashboards/
+│   ├── reports/
+│   │   ├── CAPITAL_ROTATION_EXIT_SIGNALS.md
+│   │   ├── BTC_CAPITAL_FLOW_SUMMARY.md
+│   │   ├── ALPHA_BETA_REPORT.md
+│   │   └── CRYPTO_CORRELATION_3YEAR.md
+│   └── requirements.txt
+├── requirements.txt
+└── .gitignore
 ```
 
 ---
 
-## 🚀 Getting Started
+## Installation and Setup
 
-### Installation
+### Prerequisites
 
-**Using UV (recommended):**
+- Python 3.8 or higher
+- pip or uv package manager
+
+### Installation with UV (recommended)
+
 ```bash
-# Clone repository
 git clone https://github.com/yongkangc/btc-trading-strategy-analysis.git
 cd btc-trading-strategy-analysis
 
-# Create virtual environment
 uv venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 
-# Install dependencies
 uv pip install -r requirements.txt
 ```
 
-**Using pip:**
+### Installation with pip
+
 ```bash
+git clone https://github.com/yongkangc/btc-trading-strategy-analysis.git
+cd btc-trading-strategy-analysis
+
 pip install -r requirements.txt
 ```
 
-### Run Analyses
+---
 
-**Bitcoin Strategy Backtesting:**
+## Running the Analyses
+
+### Bitcoin Strategy Backtesting
+
+Run the main backtesting analysis:
 ```bash
-# Run main backtesting analysis
 python 1_btc_strategy_backtesting/scripts/btc_yfinance_analysis.py
+```
 
-# Generate yearly performance report
+Generate yearly performance breakdown:
+```bash
 python 1_btc_strategy_backtesting/scripts/btc_yearly_analysis.py
 ```
 
-**Crypto Market Analysis:**
+### Crypto Market Analysis
+
+Generate capital rotation exit signals:
 ```bash
-# Capital rotation exit signals (live trading signals)
 python 2_crypto_market_analysis/scripts/capital_rotation_exit_signals.py
+```
 
-# BTC capital flow analysis (entry timing)
+Analyze BTC dominance capital flow patterns:
+```bash
 python 2_crypto_market_analysis/scripts/btc_lag_correlation_1year.py
+```
 
-# Alpha/beta analysis (risk assessment)
+Calculate alpha and beta metrics:
+```bash
 python 2_crypto_market_analysis/scripts/alpha_beta_analysis.py
+```
 
-# 3-year correlation (long-term performance)
+Run 3-year correlation analysis:
+```bash
 python 2_crypto_market_analysis/scripts/crypto_correlation_analysis.py
 ```
 
 ---
 
-## 📊 Key Insights Summary
+## Key Research Insights
 
-### From BTC Strategy Backtesting
+### From Bitcoin Strategy Backtesting
 
-1. **Never sell = maximum returns** (2,100% vs 232% with sell rules)
-2. **Deeper dips = better entries** (30% dip beats 20% beats 10%)
-3. **Sell rules destroy returns** even with optimized crossover detection
-4. **Risk reduction requires sacrifice** (Lower drawdown = 90% less gains)
-5. **Sharpe ratios favor no-sell** strategies (1.21 vs 0.72 best sell rule)
+1. **Never-sell strategies maximize returns**: Buy Dip 30% without selling outperforms the best sell-rule strategy by 1,868 percentage points (2,100% vs 232%)
+
+2. **Deeper dips provide better entry points**: 30% dip outperforms 20% dip, which outperforms 10% dip
+
+3. **Sell rules significantly reduce returns**: Even optimized crossover-based sell rules destroy 89% of potential gains
+
+4. **Risk reduction requires substantial return sacrifice**: Reducing maximum drawdown by 28 percentage points (from -76.6% to -48.7%) costs 90% of total returns
+
+5. **Sharpe ratios favor passive strategies**: No-sell strategies achieve Sharpe ratios of 1.11-1.21 versus 0.52-0.86 for sell-rule strategies
 
 ### From Crypto Market Analysis
 
-1. **No exploitable time lag** - Capital flows same-day, not 2 weeks later
-2. **BTC.D is the signal** - Monitor for peaks to time entries
-3. **ETH.D/SOL.D for exits** - Decline signals rotation to smaller caps
-4. **SOL is NOT defensive** - Amplifies both upside (150%) and downside (160%)
-5. **Hold duration: ~22 days** from BTC.D peak to ETH.D peak
+1. **No exploitable time lag exists**: Capital flows to altcoins same-day when BTC dominance peaks (77% correlation), not after 2-week or 1-month delays
+
+2. **BTC dominance is the primary signal**: Monitoring BTC.D peaks provides optimal entry timing for altcoin positions
+
+3. **Dominance metrics indicate exits**: ETH.D and SOL.D declines signal capital rotation to smaller market cap altcoins
+
+4. **SOL exhibits aggressive characteristics**: 150% upside capture and 160% downside capture versus BTC (amplifies movements in both directions)
+
+5. **Average hold duration is 22 days**: From BTC dominance peak to ETH dominance peak, with 69.66% average return
 
 ---
 
-## 💡 Actionable Trading Strategies
+## Trading Strategy Applications
 
-### Long-Term Bitcoin Accumulation
+### Long-term Bitcoin Accumulation
 
-**Strategy**: Buy Dip 30% + Never Sell
+**Strategy**: Buy Dip 30% with No Sell Rule
 
-1. Calculate all-time high (ATH) daily
-2. When price drops 30% from ATH → Buy with 10% of capital
-3. Never sell, regardless of market conditions
-4. Expected: 2,100% return over 5 years (vs HODL 1,576%)
+**Implementation**:
+1. Calculate Bitcoin all-time high (ATH) on a daily basis
+2. When current price drops 30% below ATH, allocate 10% of available capital to purchase
+3. Maintain position indefinitely without selling
+4. Expected 5-year return: 2,100% (based on 2020-2025 backtest)
 
-**Why it works**: Combines dip buying (better entries) with HODL thesis (no sell pressure)
+**Rationale**: Combines strategic entry timing (buying significant dips) with the HODL thesis (eliminating sell pressure and transaction costs)
 
----
-
-### Short-Term ETH/SOL Trading
+### Short-term Altcoin Trading
 
 **Strategy**: BTC Dominance Capital Rotation
 
-**ENTRY**:
-1. Monitor BTC.D in real-time (TradingView chart)
-2. When BTC.D peaks and starts declining → Buy ETH/SOL immediately
-3. Don't wait for lag - capital flows same-day
+**Entry Phase**:
+1. Monitor BTC dominance (BTC.D) in real-time using market data
+2. Identify BTC.D peaks and trend reversals
+3. Enter ETH/SOL positions immediately upon BTC.D decline (same-day execution critical)
 
-**HOLD**:
-1. Monitor ETH.D and SOL.D for ~22 days
-2. Average return during this period: 69.66% (ETH)
-3. Watch for dominance peaks
+**Hold Phase**:
+1. Monitor ETH dominance (ETH.D) and SOL dominance (SOL.D) for approximately 22 days
+2. Track for dominance peaks and reversals
+3. Expected return: 50-70% during rotation period
 
-**EXIT**:
-1. Exit when ETH.D/SOL.D decline >0.3% over 7 days
-2. OR when BTC.D starts rising >0.3% (capital returning to BTC)
-3. Current status (Oct 5, 2025): Signals INACTIVE ✅
+**Exit Phase**:
+1. Exit positions when ETH.D or SOL.D decline >0.3% over 7-day period
+2. Alternative exit: When BTC.D begins rising >0.3% (capital returning to Bitcoin)
+3. As of October 5, 2025: Exit signals inactive (hold positions)
 
-**Asset Selection**:
-- Choose ETH for defense (lower beta: 1.427)
-- Choose SOL for aggression (higher upside capture: 150%)
-- Avoid SOL if you want downside protection (160% downside capture)
+**Asset Selection Criteria**:
+- Choose ETH for lower volatility exposure (beta 1.427)
+- Choose SOL for higher return potential with increased volatility (beta 1.578)
+- Avoid SOL if downside protection is priority (160% downside capture)
 
 ---
 
-## 📈 Performance Comparison
+## Performance Summary
 
-### Bitcoin Strategies (5 years, 2020-2025)
+### Bitcoin Strategies (5-year period, 2020-2025)
 
-| Strategy | Total Return | Sharpe Ratio | Max Drawdown | Philosophy |
-|----------|--------------|--------------|--------------|------------|
-| **Buy Dip 30%** | 2,100% | 1.21 | -76.6% | Never sell |
-| **Buy Dip 20%** | 1,891% | 1.18 | -76.6% | Never sell |
-| **HODL** | 1,576% | 1.11 | -76.6% | Never sell |
-| **Buy Dip 30% + SMA Distance** | 232% | 0.72 | -66.1% | Sell rule |
+| Strategy | Total Return | Sharpe Ratio | Max Drawdown | Trading Philosophy |
+|----------|--------------|--------------|--------------|-------------------|
+| Buy Dip 30% | 2,100% | 1.21 | -76.6% | Never sell |
+| Buy Dip 20% | 1,891% | 1.18 | -76.6% | Never sell |
+| HODL | 1,576% | 1.11 | -76.6% | Never sell |
+| Buy Dip 30% + SMA Distance | 232% | 0.72 | -66.1% | Active sell rule |
 
-### Crypto Assets (3 years, 2022-2025)
+### Cryptocurrency Assets (3-year period, 2022-2025)
 
 | Asset | Total Return | Sortino Ratio | Beta vs BTC | Alpha vs BTC |
 |-------|--------------|---------------|-------------|--------------|
-| **SOL** | 598.81% | 16.49 | 1.578 | -25.4% |
-| **ETH** | 234.01% | 6.37 | 1.427 | +3.5% |
-| **HYPE** | 714.14% | N/A (11mo) | 1.536 | +275.9% |
+| SOL | 598.81% | 16.49 | 1.578 | -25.4% |
+| ETH | 234.01% | 6.37 | 1.427 | +3.5% |
+| HYPE | 714.14% | N/A (11 months) | 1.536 | +275.9% |
 
 ---
 
-## 🛠️ Technical Stack
+## Technical Stack
 
-- **Python**: pandas, numpy, scipy, yfinance, plotly
-- **Data**: Yahoo Finance API (live data)
-- **Analysis**: Linear regression, correlation matrices, backtesting, peak detection
-- **Visualization**: Plotly (interactive dashboards)
+**Programming Language**: Python 3.8+
+
+**Data Sources**: Yahoo Finance API (yfinance library)
+
+**Core Libraries**:
+- pandas: Data manipulation and analysis
+- numpy: Numerical computing
+- scipy: Statistical calculations and optimization
+- yfinance: Market data retrieval
+- plotly: Interactive visualization
+
+**Analysis Methods**:
+- Linear regression for alpha/beta calculations
+- Pearson correlation for asset relationships
+- Peak detection algorithms (scipy.signal)
+- Monte Carlo simulation for backtesting
+- Rolling window calculations for technical indicators
 
 ---
 
-## ⚠️ Disclaimers
-
-**This research is for educational purposes only. Not financial advice.**
+## Limitations and Disclaimers
 
 ### General Disclaimers
-- Past performance ≠ future results
-- Cryptocurrency markets are highly volatile
-- Do your own research (DYOR)
-- Never invest more than you can afford to lose
-- Consider your risk tolerance
-- Consult with financial advisors
 
-### Specific Limitations
+This research is for educational and informational purposes only and does not constitute financial advice, investment advice, trading advice, or any other type of professional advice.
 
-**BTC Backtesting:**
-- Analysis covers 2020-2025 bull market (may not apply in bear markets)
-- Transaction fees of 0.1% included
-- No slippage or liquidity constraints modeled
+**Important Considerations**:
+- Past performance does not guarantee future results
+- Cryptocurrency markets exhibit high volatility and significant risk
+- All investors should conduct independent research (DYOR)
+- Only invest capital you can afford to lose entirely
+- Individual risk tolerance varies significantly
+- Consult with qualified financial advisors before making investment decisions
 
-**Crypto Market Analysis:**
-- HYPE only 11 months of data (launched Nov 2024)
-- Exit signal analysis limited to 310 days
-- Simplified dominance (only BTC, ETH, SOL, HYPE)
-- Market conditions change rapidly
+### Specific Research Limitations
 
----
+**Bitcoin Strategy Backtesting**:
+- Analysis covers 2020-2025 period, predominantly a bull market
+- Transaction fees fixed at 0.1% (may vary by exchange and volume)
+- No modeling of slippage, liquidity constraints, or market impact
+- Assumes perfect execution at daily close prices
+- Does not account for tax implications
 
-## 📧 Contributing
-
-To add new analyses:
-
-1. Choose appropriate topic folder
-2. Create script in `scripts/`
-3. Save data to `data/raw/` or `data/processed/`
-4. Generate report in `reports/`
-5. Create dashboard in `dashboards/`
-6. Update topic README with findings
-7. Update this README if it's a major contribution
+**Crypto Market Analysis**:
+- HYPE token limited to 11 months of data (launched November 2024)
+- Exit signal analysis constrained to 310-day period
+- Simplified dominance calculations (BTC, ETH, SOL, HYPE only; excludes broader market)
+- Market dynamics subject to rapid changes due to regulatory developments, technological advances, and macroeconomic conditions
+- Correlation patterns may shift in different market cycles
 
 ---
 
-## 📝 License
+## Contributing
 
-MIT License - Free to use and modify
+Contributions to expand or improve the research are welcome. To contribute:
+
+1. Select appropriate topic folder for new analysis
+2. Create analysis script in `scripts/` directory
+3. Store raw data in `data/raw/` and processed results in `data/processed/`
+4. Generate comprehensive report in `reports/` directory
+5. Create interactive visualization in `dashboards/` directory
+6. Update topic-specific README with findings
+7. Update root README for significant contributions
+8. Submit pull request with detailed description
 
 ---
 
-## 🔗 Links
+## License
 
-- **Repository**: https://github.com/yongkangc/btc-trading-strategy-analysis
-- **BTC Strategy Analysis**: [1_btc_strategy_backtesting/README.md](1_btc_strategy_backtesting/README.md)
-- **Crypto Market Analysis**: [2_crypto_market_analysis/README.md](2_crypto_market_analysis/README.md)
+MIT License - Open source and free to use, modify, and distribute
 
 ---
 
-**Created with**: Python, YFinance, Pandas, NumPy, Plotly, SciPy
-**Data Source**: Yahoo Finance (Live data)
+## Repository Information
+
+**Repository**: https://github.com/yongkangc/btc-trading-strategy-analysis
+**Data Source**: Yahoo Finance (real-time market data)
+**Analysis Period**: 2020-2025 (Bitcoin strategies), 2022-2025 (market analysis)
+**Total Strategies Analyzed**: 15 (Bitcoin) + 4 (market frameworks)
 **Last Updated**: October 5, 2025
-**Total Strategies Analyzed**: 15 (BTC) + 4 (Crypto Markets)
+
+---
+
+## Contact and Further Reading
+
+For detailed methodology, implementation notes, and extended analysis:
+- Bitcoin Strategy Backtesting: [1_btc_strategy_backtesting/README.md](1_btc_strategy_backtesting/README.md)
+- Crypto Market Analysis: [2_crypto_market_analysis/README.md](2_crypto_market_analysis/README.md)
+- Developer Notes: [1_btc_strategy_backtesting/CLAUDE.md](1_btc_strategy_backtesting/CLAUDE.md)
