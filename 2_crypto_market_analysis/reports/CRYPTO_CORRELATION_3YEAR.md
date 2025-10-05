@@ -21,7 +21,7 @@ Comprehensive 3-year correlation analysis comparing Ethereum (ETH), Solana (SOL)
 
 | Asset | Initial Price | Final Price | Total Return | Annualized Return |
 |-------|--------------|-------------|--------------|-------------------|
-| **SOL** 🥇 | $33.34 | $233.00 | **598.81%** | **901.42%** |
+| **SOL** | $33.34 | $233.00 | **598.81%** | **901.42%** |
 | **ETH** | $1,351.71 | $4,514.87 | **234.01%** | **317.53%** |
 | **HYPE** | $6.08* | $49.49 | **714.14%*** | **N/A** |
 
@@ -65,7 +65,7 @@ HYPE is the most volatile (highest risk/reward), while ETH is the most stable of
 
 | Rank | Asset | Sortino Ratio | Interpretation |
 |------|-------|---------------|----------------|
-| 1 | **SOL** 🏆 | **16.488** | Exceptional risk-adjusted returns |
+| 1 | **SOL** | **16.488** | Exceptional risk-adjusted returns |
 | 2 | **ETH** | **6.373** | Very good risk-adjusted returns |
 | 3 | **HYPE** | **N/A** | Insufficient data |
 
@@ -111,7 +111,7 @@ Measures downside risk specifically (volatility of negative returns only):
 
 ## Investment Insights
 
-### Best for Risk-Adjusted Returns: **SOL** 🏆
+### Best for Risk-Adjusted Returns: **SOL** 
 - Highest Sortino ratio (16.5)
 - Strong monthly returns (11.10% avg)
 - Moderate correlation with ETH (0.76)
@@ -128,7 +128,7 @@ Measures downside risk specifically (volatility of negative returns only):
 - Highest monthly average (26.18%)
 - Best win rate (82%)
 - Highest volatility (132%)
-- ⚠️ Limited data (11 months only)
+- Limited data (11 months only)
 - Highest downside risk (65.16%)
 
 ### Diversification Benefits
@@ -151,7 +151,7 @@ The interactive Plotly dashboard includes:
 5. **Sortino Ratios** - Risk-adjusted performance comparison
 6. **Cumulative Returns** - Total return over time
 
-📊 [View Interactive Dashboard](../dashboards/crypto_correlation_dashboard.html)
+[View Interactive Dashboard](../dashboards/crypto_correlation_dashboard.html)
 
 ---
 

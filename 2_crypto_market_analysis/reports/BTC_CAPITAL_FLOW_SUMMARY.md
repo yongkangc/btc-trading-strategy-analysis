@@ -9,7 +9,7 @@
 
 ---
 
-## 🎯 Core Research Question
+## Core Research Question
 
 **"After BTC Dominance peaks/declines, where does capital flow to?"**
 
@@ -19,7 +19,7 @@ We tested two scenarios:
 
 ---
 
-## 📊 KEY FINDINGS
+## KEY FINDINGS
 
 ### Finding #1: **ETH & SOL Move SIMULTANEOUSLY with BTC** ⏱️
 
@@ -31,10 +31,10 @@ We tested two scenarios:
 | **BTC → SOL** | **75.3%** | -10.9% | 3.8% | 1.9% |
 
 ### Interpretation:
-- ✅ **BTC-ETH move together 77.2% of the time** (STRONG correlation)
-- ✅ **BTC-SOL move together 75.3% of the time** (STRONG correlation)
-- ❌ **Time delays WEAKEN correlation** (drops to near-zero)
-- ❌ **No exploitable lag pattern** for trading
+- **BTC-ETH move together 77.2% of the time** (STRONG correlation)
+- **BTC-SOL move together 75.3% of the time** (STRONG correlation)
+- **Time delays WEAKEN correlation** (drops to near-zero)
+- **No exploitable lag pattern** for trading
 
 ### What This Means:
 > **ETH and SOL react to BTC movements IMMEDIATELY (same day), not with a 2-week, 1-month, or 2-month delay.**
@@ -49,7 +49,7 @@ We tested two scenarios:
 
 | Asset | Avg Daily Return | Performance vs BTC |
 |-------|------------------|-------------------|
-| **ETH** 🏆 | **+6.77%** | **5.5x better than BTC** |
+| **ETH** | **+6.77%** | **5.5x better than BTC** |
 | **SOL** | **+4.86%** | **3.7x better than BTC** |
 | **BTC** | **+1.30%** | Baseline |
 
@@ -86,13 +86,13 @@ We tested two scenarios:
 
 | Asset | Start Price | End Price | Total Return |
 |-------|-------------|-----------|--------------|
-| **SOL** 🥇 | $105.51 | $233.00 | **+120.8%** |
+| **SOL** | $105.51 | $233.00 | **+120.8%** |
 | **BTC** | $60,274.50 | $73,664.48* | **+22.2%*** |
 | **ETH** | $1,472.55 | $4,514.87 | **+206.6%** |
 
 *Estimated based on available data range
 
-### Winner: **ETH** 🏆
+### Winner: **ETH** 
 - **3-year total**: +234% (from crypto_correlation_analysis.py)
 - **1-year total**: +206.6%
 - **Best performer when BTC.D drops**: +6.77% avg daily
@@ -130,7 +130,7 @@ SOL    75.3%     75.1%    100.0%
 
 ## 💡 Trading Implications
 
-### ❌ What DOESN'T Work:
+### What DOESN'T Work:
 
 1. **Waiting for BTC to move, then buying ETH/SOL 2 weeks later**
    - Correlation: 0.7% to 7.8% (too weak)
@@ -140,7 +140,7 @@ SOL    75.3%     75.1%    100.0%
    - Correlation: -1.4% to 3.8% (essentially random)
    - Not exploitable
 
-### ✅ What DOES Work:
+### What DOES Work:
 
 1. **Buy ETH/SOL when BTC.D starts declining**
    - ETH outperforms BTC by 5.5x when BTC.D drops
@@ -158,7 +158,7 @@ SOL    75.3%     75.1%    100.0%
 
 ---
 
-## 🎯 Answer to the Research Question
+## Answer to the Research Question
 
 ### **"Where does capital flow after BTC Dominance peaks?"**
 
@@ -192,7 +192,7 @@ This suggests **diversifying between ETH and SOL** provides limited benefit, as 
 
 ---
 
-## 📊 Visual Summary
+## Visual Summary
 
 ### Capital Flow Pattern:
 
@@ -205,7 +205,7 @@ BTC Dominance DECLINES
          ↓
     ┌─────────┴─────────┐
     ↓                   ↓
-  ETH 🏆              SOL
+  ETH              SOL
  +6.77%              +4.86%
 (5.5x BTC)          (3.7x BTC)
 ```
@@ -226,11 +226,11 @@ Day 60:   Random correlation (-1.4% to 1.9%)
 
 ### Data Quality Checks:
 
-✅ **Live Data**: Yahoo Finance (Oct 2024 - Oct 2025)
-✅ **Sample Size**: 364 days (1 full year)
-✅ **Data Points**: Daily close prices
-✅ **Calculation Method**: Pearson correlation
-✅ **Missing Data**: Forward-filled (< 0.1% impact)
+**Live Data**: Yahoo Finance (Oct 2024 - Oct 2025)
+**Sample Size**: 364 days (1 full year)
+**Data Points**: Daily close prices
+**Calculation Method**: Pearson correlation
+**Missing Data**: Forward-filled (< 0.1% impact)
 
 ### Assumptions:
 
@@ -244,7 +244,7 @@ Day 60:   Random correlation (-1.4% to 1.9%)
 
 ---
 
-## 📁 Output Files
+## Output Files
 
 All analysis data saved to:
 
@@ -278,7 +278,7 @@ alt_returns = returns[btc_dom_drops]
 
 ---
 
-## 🚀 Actionable Recommendations
+## Actionable Recommendations
 
 ### For Traders:
 
@@ -316,7 +316,7 @@ alt_returns = returns[btc_dom_drops]
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 1. **Sample Size**: 1 year (364 days)
    - May not capture full market cycles
@@ -360,7 +360,7 @@ From `crypto_correlation_analysis.py` (Oct 2022 - Oct 2025):
 
 ---
 
-## 🎯 Final Conclusion
+## Final Conclusion
 
 ### Research Question:
 > **"After BTC Dominance peaks, where does capital flow?"**
@@ -370,10 +370,10 @@ From `crypto_correlation_analysis.py` (Oct 2022 - Oct 2025):
 
 ### Key Insights:
 
-1. ✅ **No time lag exists** (2-week/1-month/2-month delays show near-zero correlation)
-2. ✅ **ETH outperforms** when BTC.D drops (+6.77% vs BTC's +1.30%)
-3. ✅ **High correlation** (77% BTC-ETH, 75% BTC-SOL) = simultaneous moves
-4. ❌ **No trading edge** from waiting for lagged response
+1. **No time lag exists** (2-week/1-month/2-month delays show near-zero correlation)
+2. **ETH outperforms** when BTC.D drops (+6.77% vs BTC's +1.30%)
+3. **High correlation** (77% BTC-ETH, 75% BTC-SOL) = simultaneous moves
+4. **No trading edge** from waiting for lagged response
 
 ### Trading Strategy:
 

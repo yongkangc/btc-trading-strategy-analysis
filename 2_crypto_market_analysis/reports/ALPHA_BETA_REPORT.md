@@ -102,9 +102,9 @@ Alpha measures excess returns beyond what beta predicts:
 
 | Asset | Upside Capture | Downside Capture | Verdict |
 |-------|----------------|------------------|---------|
-| ETH | 133.5% | 131.5% | ❌ NO (amplifies both) |
-| SOL | 150.4% | 159.7% | ❌ NO (amplifies both) |
-| HYPE | 211.2% | 116.6% | ❌ NO (amplifies both) |
+| ETH | 133.5% | 131.5% | NO (amplifies both) |
+| SOL | 150.4% | 159.7% | NO (amplifies both) |
+| HYPE | 211.2% | 116.6% | NO (amplifies both) |
 
 ### Interpretation:
 
@@ -121,27 +121,27 @@ Alpha measures excess returns beyond what beta predicts:
 - Upside Capture: 133.5%
   - Goes UP 33.5% MORE than BTC on up days
 - Downside Capture: 131.5%
-  - Goes DOWN 31.5% MORE than BTC on down days ⚠️
+  - Goes DOWN 31.5% MORE than BTC on down days 
 
 **SOL**:
 - Upside Capture: 150.4%
   - Goes UP 50.4% MORE than BTC on up days
 - Downside Capture: 159.7%
-  - Goes DOWN 59.7% MORE than BTC on down days ⚠️
+  - Goes DOWN 59.7% MORE than BTC on down days 
 
 **HYPE**:
 - Upside Capture: 211.2%
   - Goes UP 111.2% MORE than BTC on up days
 - Downside Capture: 116.6%
-  - Goes DOWN 16.6% MORE than BTC on down days ⚠️
+  - Goes DOWN 16.6% MORE than BTC on down days 
 
 ### Special Analysis: SOL (2024-2025)
 
 **Claim**: "SOL goes down less and goes up more than BTC"
 
-**Verdict**: ❌ FALSE
-- SOL goes up 50.4% MORE than BTC ✅
-- BUT SOL also goes down 59.7% MORE than BTC ❌
+**Verdict**: FALSE
+- SOL goes up 50.4% MORE than BTC 
+- BUT SOL also goes down 59.7% MORE than BTC 
 - SOL amplifies BTC movements in BOTH directions (high beta = 1.58)
 
 ## Investment Implications

@@ -9,7 +9,7 @@
 
 ---
 
-## 🎯 Research Question
+## Research Question
 
 **"After BTC.D drops and capital flows to ETH/SOL, how long does it stay before rotating to smaller caps?"**
 
@@ -17,7 +17,7 @@ This analysis identifies:**exit signals** for ETH/SOL positions by detecting whe
 
 ---
 
-## 📊 Key Findings
+## Key Findings
 
 ### Rotation Timing
 
@@ -43,11 +43,11 @@ This analysis identifies:**exit signals** for ETH/SOL positions by detecting whe
 
 **Exit Signals:**
 
-- ✅ **ETH Exit Signal: INACTIVE**
+- **ETH Exit Signal: INACTIVE**
   - ETH.D is stable or rising
   - Safe to hold ETH positions
 
-- ✅ **SOL Exit Signal: INACTIVE**
+- **SOL Exit Signal: INACTIVE**
   - SOL.D is stable or rising
   - Safe to hold SOL positions
 
@@ -106,7 +106,7 @@ SOL.D = SOL / (BTC + ETH + SOL + Others) × 100%
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 1. **Simplified dominance**: Only includes BTC, ETH, SOL, HYPE (missing many alts)
 2. **Market conditions**: Analysis based on recent market cycle
@@ -115,7 +115,7 @@ SOL.D = SOL / (BTC + ETH + SOL + Others) × 100%
 
 ---
 
-## 📁 Output Files
+## Output Files
 
 1. **CAPITAL_ROTATION_EXIT_SIGNALS.md** - This report
 2. **capital_rotation_exit_signals_dashboard.html** - Interactive charts
