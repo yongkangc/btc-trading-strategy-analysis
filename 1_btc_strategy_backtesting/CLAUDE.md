@@ -2,6 +2,39 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Writing Style Guidelines
+
+When creating or updating documentation in this repository:
+
+**Tone and Style**:
+- Use professional academic tone throughout all documentation
+- Write clear, concise, and direct prose
+- Avoid casual language, colloquialisms, or informal expressions
+- Never use emojis in any documentation files (README, reports, markdown files)
+- Avoid all-caps text except for standard acronyms (HODL, DCA, RSI, SMA, EMA)
+- Use formal section headings without decorative elements
+
+**Structure**:
+- Start with research question or objective
+- Present methodology clearly
+- State findings with supporting data
+- Include limitations and disclaimers
+- Use tables for comparative data
+- Use bullet points for lists, not numbered lists unless sequence matters
+
+**Language**:
+- Replace "NO" with "No exploitable time lag exists"
+- Replace "YES" with "Confirmed" or specific findings
+- Replace "WINNER" with "Best performing strategy" or "Top performer"
+- Replace "TLDR" with "Summary" or "Key Findings"
+- Replace "IMMEDIATELY" with "same-day" or "without delay"
+
+**Examples**:
+- Bad: "🎯 KEY FINDING: ETH is the WINNER! 🚀"
+- Good: "Primary finding: ETH demonstrates superior risk-adjusted returns"
+- Bad: "NO time lag found ❌"
+- Good: "No exploitable time lag detected in the analysis"
+
 ## Project Overview
 
 Bitcoin trading strategy backtesting framework that analyzes 15+ accumulation strategies using real BTC-USD price data from Yahoo Finance (2020-2025). Tests passive strategies (HODL, DCA) and active trading approaches (dip buying, technical indicators, profit-taking rules) to compare risk-adjusted returns.
